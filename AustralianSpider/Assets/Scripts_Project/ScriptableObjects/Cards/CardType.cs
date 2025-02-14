@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CardType
 {
-    Clubs_Trefa,
+    Clubs_Krest,
     Diamonds_Bubna,
     Heart_Cherv,
     Spade_Peak
