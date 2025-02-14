@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class StoreCoverCardDesignModel : MonoBehaviour
+public class StoreCoverCardDesignModel
 {
     public event Action<CoverCardDesign> OnOpenCoverCardDesign;
     public event Action<CoverCardDesign> OnCloseCoverCardDesign;
@@ -21,7 +21,7 @@ public class StoreCoverCardDesignModel : MonoBehaviour
 
     private List<CoverCardDesignData> coverCardDesignDatas = new List<CoverCardDesignData>();
 
-    public readonly string FilePath = Path.Combine(Application.persistentDataPath, "FaceCardDesign.json");
+    public readonly string FilePath = Path.Combine(Application.persistentDataPath, "CoverCardDesign.json");
 
     public StoreCoverCardDesignModel(CoverCardDesignGroup faceCardDesigns)
     {
@@ -45,7 +45,7 @@ public class StoreCoverCardDesignModel : MonoBehaviour
 
             coverCardDesignDatas = new List<CoverCardDesignData>();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < coverCardDesigns.CoverCardDesigns.Count; i++)
             {
                 if (i == 0)
                 {

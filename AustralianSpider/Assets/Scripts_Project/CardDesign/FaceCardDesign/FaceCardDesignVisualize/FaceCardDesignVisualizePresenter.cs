@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FaceCardDesignVisualizePresenter
 {
-    private FaceCardDesignVisualizeModel model;
-    private FaceCardDesignVisualizeView view;
+    private readonly FaceCardDesignVisualizeModel model;
+    private readonly FaceCardDesignVisualizeView view;
 
     public FaceCardDesignVisualizePresenter(FaceCardDesignVisualizeModel model, FaceCardDesignVisualizeView view)
     {

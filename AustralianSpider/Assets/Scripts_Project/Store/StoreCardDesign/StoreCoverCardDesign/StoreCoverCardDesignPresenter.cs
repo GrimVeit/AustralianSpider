@@ -24,13 +24,13 @@ public class StoreCoverCardDesignPresenter
 
     #region Input
 
-    public event Action<CoverCardDesign> OnOpenFaceCardDesign
+    public event Action<CoverCardDesign> OnOpenCoverCardDesign
     {
         add { model.OnOpenCoverCardDesign += value; }
         remove { model.OnOpenCoverCardDesign -= value; }
     }
 
-    public event Action<CoverCardDesign> OnCloseFaceCardDesign
+    public event Action<CoverCardDesign> OnCloseCoverCardDesign
     {
         add { model.OnCloseCoverCardDesign += value; }
         remove { model.OnCloseCoverCardDesign -= value; }
@@ -38,13 +38,13 @@ public class StoreCoverCardDesignPresenter
 
 
 
-    public event Action<CoverCardDesign> OnDeselectFaceCardDesign
+    public event Action<CoverCardDesign> OnDeselectCoverCardDesign
     {
         add { model.OnDeselectCoverCardDesign += value; }
         remove { model.OnDeselectCoverCardDesign -= value; }
     }
 
-    public event Action<CoverCardDesign> OnSelectFaceCardDesign
+    public event Action<CoverCardDesign> OnSelectCoverCardDesign
     {
         add { model.OnSelectCoverCardDesign += value; }
         remove { model.OnSelectCoverCardDesign -= value; }

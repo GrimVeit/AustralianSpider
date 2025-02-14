@@ -19,6 +19,10 @@ public class MainMenuEntryPoint : MonoBehaviour
     private SelectFaceCardDesignPresenter selectFaceCardDesignPresenter;
     private FaceCardDesignVisualizePresenter faceCardDesignVisualizePresenter;
 
+    private StoreCoverCardDesignPresenter storeCoverCardDesignPresenter;
+    private SelectCoverCardDesignPresenter selectCoverCardDesignPresenter;
+    private CoverCardDesignVisualizePresenter coverCardDesignVisualizePresenter;
+
     public void Run(UIRootView uIRootView)
     {
         sceneRoot = menuRootPrefab;
@@ -39,10 +43,12 @@ public class MainMenuEntryPoint : MonoBehaviour
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
 
         storeFaceCardDesignPresenter = new StoreFaceCardDesignPresenter(new StoreFaceCardDesignModel(faceCardDesignGroup));
-
         selectFaceCardDesignPresenter = new SelectFaceCardDesignPresenter(new SelectFaceCardDesignModel(), viewContainer.GetView<SelectFaceCardDesignView>());
-
         faceCardDesignVisualizePresenter = new FaceCardDesignVisualizePresenter(new FaceCardDesignVisualizeModel(), viewContainer.GetView<FaceCardDesignVisualizeView>());
+
+        storeCoverCardDesignPresenter = new StoreCoverCardDesignPresenter(new StoreCoverCardDesignModel(coverCardDesignGroup));
+        selectCoverCardDesignPresenter = new SelectCoverCardDesignPresenter(new SelectCoverCardDesignModel(), viewContainer.GetView<SelectCoverCardDesignView>());
+        coverCardDesignVisualizePresenter = new CoverCardDesignVisualizePresenter(new CoverCardDesignVisualizeModel(), viewContainer.GetView<CoverCardDesignVisualizeView>());
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -54,8 +60,12 @@ public class MainMenuEntryPoint : MonoBehaviour
         sceneRoot.Initialize();
         bankPresenter.Initialize();
 
+        coverCardDesignVisualizePresenter.Initialize();
+        selectCoverCardDesignPresenter.Initialize();
         faceCardDesignVisualizePresenter.Initialize();
         selectFaceCardDesignPresenter.Initialize();
+
+        storeCoverCardDesignPresenter.Initialize();
         storeFaceCardDesignPresenter.Initialize();
     }
 
@@ -71,6 +81,13 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign += selectFaceCardDesignPresenter.SelectFaceCardDesign;
         storeFaceCardDesignPresenter.OnDeselectFaceCardDesign += selectFaceCardDesignPresenter.DeselectFaceCardDesign;
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign += faceCardDesignVisualizePresenter.SetFaceCardDesign;
+
+        storeCoverCardDesignPresenter.OnOpenCoverCardDesign += selectCoverCardDesignPresenter.SetOpenCoverCardDesign;
+        storeCoverCardDesignPresenter.OnCloseCoverCardDesign += selectCoverCardDesignPresenter.SetCloseCoverCardDesign;
+        selectCoverCardDesignPresenter.OnChooseCoverCardDesign += storeCoverCardDesignPresenter.SelectCoverCardDesign;
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign += selectCoverCardDesignPresenter.SelectCoverCardDesign;
+        storeCoverCardDesignPresenter.OnDeselectCoverCardDesign += selectCoverCardDesignPresenter.DeselectCoverCardDesign;
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign += coverCardDesignVisualizePresenter.SetCoverCardDesign;
     }
 
     private void DeactivateEvents()
@@ -83,6 +100,13 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= selectFaceCardDesignPresenter.SelectFaceCardDesign;
         storeFaceCardDesignPresenter.OnDeselectFaceCardDesign -= selectFaceCardDesignPresenter.DeselectFaceCardDesign;
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= faceCardDesignVisualizePresenter.SetFaceCardDesign;
+
+        storeCoverCardDesignPresenter.OnOpenCoverCardDesign -= selectCoverCardDesignPresenter.SetOpenCoverCardDesign;
+        storeCoverCardDesignPresenter.OnCloseCoverCardDesign -= selectCoverCardDesignPresenter.SetCloseCoverCardDesign;
+        selectCoverCardDesignPresenter.OnChooseCoverCardDesign -= storeCoverCardDesignPresenter.SelectCoverCardDesign;
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= selectCoverCardDesignPresenter.SelectCoverCardDesign;
+        storeCoverCardDesignPresenter.OnDeselectCoverCardDesign -= selectCoverCardDesignPresenter.DeselectCoverCardDesign;
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= coverCardDesignVisualizePresenter.SetCoverCardDesign;
     }
 
     private void ActivateTransitionsSceneEvents()
@@ -110,8 +134,12 @@ public class MainMenuEntryPoint : MonoBehaviour
         particleEffectPresenter?.Dispose();
         bankPresenter?.Dispose();
 
+        coverCardDesignVisualizePresenter?.Dispose();
+        selectCoverCardDesignPresenter?.Dispose();
         faceCardDesignVisualizePresenter?.Dispose();
         selectFaceCardDesignPresenter?.Dispose();
+
+        storeCoverCardDesignPresenter?.Dispose();
         storeFaceCardDesignPresenter.Dispose();
     }
 

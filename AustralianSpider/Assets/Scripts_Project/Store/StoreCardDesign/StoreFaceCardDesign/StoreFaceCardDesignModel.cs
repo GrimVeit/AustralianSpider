@@ -46,7 +46,7 @@ public class StoreFaceCardDesignModel
 
             faceCardDesignDatas = new List<FaceCardDesignData>();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < faceCardDesigns.FaceCardDesigns.Count; i++)
             {
                 if (i == 0)
                 {
