@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcdfbfb090fba74abf2b0da01fcf3ec, type: 3}
+  m_Name: Diamonds_BUBNI_3
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: d0b90df7960905c44ac98d89152ffbd8, type: 2}
+  - {fileID: 11400000, guid: e1065d9e716b77b4381cdaee2730a1f8, type: 2}
+  - {fileID: 11400000, guid: e0949c9304c05d84c94b654f305ed4e3, type: 2}
+  - {fileID: 11400000, guid: ad6aafbc4cbd90f46a06eb8a60a66bc8, type: 2}
+  - {fileID: 11400000, guid: 76b51c0398616ec40bc2787b362f2727, type: 2}
+  - {fileID: 11400000, guid: 84806dd524477f145a91dfd5a4d6ce03, type: 2}
+  - {fileID: 11400000, guid: 67dc1cbde70a51241a77d779b6fb5c1d, type: 2}
+  - {fileID: 11400000, guid: fa65321f98934ee4e9101baa32700acd, type: 2}
+  - {fileID: 11400000, guid: 304782ae71a04d846b6d64a300bd5d6a, type: 2}
+  - {fileID: 11400000, guid: c59bc97ef9fd28a43a1bb46476796b5c, type: 2}
+  - {fileID: 11400000, guid: 59b330c2d226fff41a09e6969c8194ed, type: 2}
+  - {fileID: 11400000, guid: 6b175b645ddc5a7458cb4ae2cb63881c, type: 2}
+  - {fileID: 11400000, guid: 1ad7d5506efc7104f82327af044684de, type: 2}

@@ -1,156 +1,135 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class StoreFaceCardDesignModel
 {
-    //public event Action<Ship> OnOpenShip;
-    //public event Action<Ship> OnCloseShip;
+    public event Action<FaceCardDesign> OnOpenFaceCardDesign;
+    public event Action<FaceCardDesign> OnCloseFaceCardDesign;
 
-    //public event Action<Ship> OnSelectOpenShip;
-    //public event Action<Ship> OnSelectCloseShip;
-
-    //public event Action<Ship> OnDeselectShip;
-    //public event Action<Ship> OnSelectShip;
+    public event Action<FaceCardDesign> OnDeselectFaceCardDesign;
+    public event Action<FaceCardDesign> OnSelectFaceCardDesign;
 
 
-    //private Ships ships;
+    private FaceCardDesignGroup faceCardDesigns;
 
-    //private Ship currentShip;
-    //private ShipData currentGalaxyData;
+    private FaceCardDesign currentFaceCardDesign;
+    private FaceCardDesignData currentFaceCardDesidnData;
 
-    //private List<ShipData> shipDatas = new List<ShipData>();
+    private List<FaceCardDesignData> faceCardDesignDatas = new List<FaceCardDesignData>();
 
-    //public readonly string FilePath = Path.Combine(Application.persistentDataPath, "Ship.json");
-    //private IMoneyProvider moneyProvider;
+    public readonly string FilePath = Path.Combine(Application.persistentDataPath, "FaceCardDesign.json");
 
-    //public StoreShipModel(Ships ships, IMoneyProvider moneyProvider)
-    //{
-    //    this.ships = ships;
-    //    this.moneyProvider = moneyProvider;
-    //}
+    public StoreFaceCardDesignModel(FaceCardDesignGroup faceCardDesigns)
+    {
+        this.faceCardDesigns = faceCardDesigns;
+    }
 
-    //public void Initialize()
-    //{
-    //    if (File.Exists(FilePath))
-    //    {
-    //        string loadedJson = File.ReadAllText(FilePath);
-    //        ShipDatas shipDatas = JsonUtility.FromJson<ShipDatas>(loadedJson);
+    public void Initialize()
+    {
+        if (File.Exists(FilePath))
+        {
+            string loadedJson = File.ReadAllText(FilePath);
+            FaceCardDesignDatas faceCardDesignDatas = JsonUtility.FromJson<FaceCardDesignDatas>(loadedJson);
 
-    //        Debug.Log("Success");
+            Debug.Log("Success");
 
-    //        this.shipDatas = shipDatas.Datas.ToList();
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("HDBNJJJJJJJJJJJJJJJJJJJJJJ");
+            this.faceCardDesignDatas = faceCardDesignDatas.Datas.ToList();
+        }
+        else
+        {
+            Debug.Log("HDBNJJJJJJJJJJJJJJJJJJJJJJ");
 
-    //        shipDatas = new List<ShipData>();
+            faceCardDesignDatas = new List<FaceCardDesignData>();
 
-    //        for (int i = 0; i < 3; i++)
-    //        {
-    //            if (i == 0)
-    //            {
-    //                shipDatas.Add(new ShipData(false, true));
-    //            }
-    //            else
-    //            {
-    //                shipDatas.Add(new ShipData(false, false));
-    //            }
-    //        }
-    //    }
+            for (int i = 0; i < 4; i++)
+            {
+                if (i == 0)
+                {
+                    faceCardDesignDatas.Add(new FaceCardDesignData(true, true));
+                }
+                else
+                {
+                    faceCardDesignDatas.Add(new FaceCardDesignData(true, false));
+                }
+            }
+        }
 
-    //    for (int i = 0; i < ships.ships.Count; i++)
-    //    {
-    //        ships.ships[i].SetData(shipDatas[i]);
+        for (int i = 0; i < faceCardDesigns.FaceCardDesigns.Count; i++)
+        {
+            faceCardDesigns.FaceCardDesigns[i].SetData(faceCardDesignDatas[i]);
 
-    //        if (shipDatas[i].IsOpen)
-    //            OnOpenShip?.Invoke(ships.ships[i]);
-    //        else
-    //            OnCloseShip?.Invoke(ships.ships[i]);
-    //    }
+            if (faceCardDesigns.FaceCardDesigns[i].DesignData.IsOpen)
+                OnOpenFaceCardDesign?.Invoke(faceCardDesigns.FaceCardDesigns[i]);
+            else
+                OnCloseFaceCardDesign?.Invoke(faceCardDesigns.FaceCardDesigns[i]);
+        }
 
-    //    SelectShip(GetSelectShipIndex());
-    //}
+        SelectFaceCardDesign(GetSelectShipIndex());
+    }
 
-    //public void Dispose()
-    //{
-    //    string json = JsonUtility.ToJson(new ShipDatas(shipDatas.ToArray()));
-    //    File.WriteAllText(FilePath, json);
-    //}
+    public void Dispose()
+    {
+        string json = JsonUtility.ToJson(new FaceCardDesignDatas(faceCardDesignDatas.ToArray()));
+        File.WriteAllText(FilePath, json);
+    }
 
-    //public void BuyShip(int number)
-    //{
-    //    var ship = ships.GetShipByID(number.ToString());
+    public void BuyFaceCardDesign(int number)
+    {
+        var faceCardDesign = faceCardDesigns.GetFaceCardDesignById(number);
 
-    //    if (ship.ShipData.IsOpen) return;
+        if (faceCardDesign.DesignData.IsOpen) return;
 
-    //    if (moneyProvider.CanAfford(ship.Price))
-    //    {
-    //        moneyProvider.SendMoney(-ship.Price);
+        faceCardDesign.DesignData.IsOpen = true;
+        OnOpenFaceCardDesign?.Invoke(faceCardDesign);
+    }
 
-    //        ship.ShipData.IsOpen = true;
+    public void SelectFaceCardDesign(int number)
+    {
+        if (currentFaceCardDesign != null)
+        {
+            currentFaceCardDesign.DesignData.IsSelect = false;
+            OnDeselectFaceCardDesign?.Invoke(currentFaceCardDesign);
+        }
 
-    //        OnOpenShip?.Invoke(ship);
+        currentFaceCardDesign = faceCardDesigns.GetFaceCardDesignById(number);
 
-    //        SelectShip(number);
-    //    }
-    //}
-
-    //public void SelectShip(int number)
-    //{
-    //    if (currentShip != null)
-    //    {
-    //        currentShip.ShipData.IsSelect = false;
-    //        OnDeselectShip?.Invoke(currentShip);
-    //    }
-
-    //    currentShip = ships.GetShipByID(number.ToString());
-
-    //    if (currentShip != null)
-    //    {
-    //        if (currentShip.ShipData.IsOpen)
-    //        {
-    //            OnSelectOpenShip?.Invoke(currentShip);
-    //        }
-    //        else
-    //        {
-    //            OnSelectCloseShip?.Invoke(currentShip);
-    //        }
-
-    //        currentShip.ShipData.IsSelect = true;
-    //        OnSelectShip?.Invoke(currentShip);
-    //    }
-    //}
+        if (currentFaceCardDesign != null)
+        {
+            currentFaceCardDesign.DesignData.IsSelect = true;
+            OnSelectFaceCardDesign?.Invoke(currentFaceCardDesign);
+        }
+    }
 
 
-    //private int GetSelectShipIndex()
-    //{
-    //    return int.Parse(ships.ships.FirstOrDefault(ship => ship.ShipData.IsSelect == true).GetID());
-    //}
+    private int GetSelectShipIndex()
+    {
+        return faceCardDesigns.FaceCardDesigns.FirstOrDefault(ship => ship.DesignData.IsSelect == true).ID;
+    }
 }
 
 [Serializable]
-public class ShipDatas
+public class FaceCardDesignDatas
 {
-    public ShipData[] Datas;
+    public FaceCardDesignData[] Datas;
 
-    public ShipDatas(ShipData[] datas)
+    public FaceCardDesignDatas(FaceCardDesignData[] datas)
     {
         Datas = datas;
     }
 }
 
 [Serializable]
-public class ShipData
+public class FaceCardDesignData
 {
     public bool IsOpen;
     public bool IsSelect;
 
-    public ShipData(bool isOpen, bool isSelect)
+    public FaceCardDesignData(bool isOpen, bool isSelect)
     {
         this.IsOpen = isOpen;
         this.IsSelect = isSelect;

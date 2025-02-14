@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,37 +6,60 @@ using UnityEngine;
 public class StoreFaceCardDesignPresenter
 {
     private StoreFaceCardDesignModel model;
-    private StoreFaceCardDesignView view;
 
-    public StoreFaceCardDesignPresenter(StoreFaceCardDesignModel model, StoreFaceCardDesignView view)
+    public StoreFaceCardDesignPresenter(StoreFaceCardDesignModel model)
     {
         this.model = model;
-        this.view = view;
     }
 
     public void Initialize()
     {
-        ActivateEvents();
+        model.Initialize();
     }
 
     public void Dispose()
     {
-        DeactivateEvents();
-    }
-
-    private void ActivateEvents()
-    {
-
-    }
-
-    private void DeactivateEvents()
-    {
-
+        model.Dispose();
     }
 
     #region Input
 
+    public event Action<FaceCardDesign> OnOpenFaceCardDesign
+    {
+        add { model.OnOpenFaceCardDesign += value; }
+        remove { model.OnOpenFaceCardDesign -= value; }
+    }
 
+    public event Action<FaceCardDesign> OnCloseFaceCardDesign
+    {
+        add { model.OnCloseFaceCardDesign += value; }
+        remove { model.OnCloseFaceCardDesign -= value; }
+    }
+
+
+
+    public event Action<FaceCardDesign> OnDeselectFaceCardDesign
+    {
+        add { model.OnDeselectFaceCardDesign += value; }
+        remove { model.OnDeselectFaceCardDesign -= value; }
+    }
+
+    public event Action<FaceCardDesign> OnSelectFaceCardDesign
+    {
+        add { model.OnSelectFaceCardDesign += value; }
+        remove { model.OnSelectFaceCardDesign -= value; }
+    }
+
+
+    public void SelectFaceCardDesign(int id)
+    {
+        model.SelectFaceCardDesign(id);
+    }
+
+    public void BuyFaceCardDesign(int id)
+    {
+        model.BuyFaceCardDesign(id);
+    }
 
     #endregion
 }

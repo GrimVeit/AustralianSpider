@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcdfbfb090fba74abf2b0da01fcf3ec, type: 3}
+  m_Name: Spades_PEAKS_2
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: a9a417cf568b5344ab935301c45c6208, type: 2}
+  - {fileID: 11400000, guid: 8640aa185fdc37c4fa64661525d621e7, type: 2}
+  - {fileID: 11400000, guid: 180ae48d2fd47de49bce031486655cb6, type: 2}
+  - {fileID: 11400000, guid: 045cc7d1616526e498565d7444cfbe01, type: 2}
+  - {fileID: 11400000, guid: d5a74e9724e6a964faec77ac98254c2e, type: 2}
+  - {fileID: 11400000, guid: 16aaf0463484a184aa99bdbdc7911f7d, type: 2}
+  - {fileID: 11400000, guid: 089ff45c009fdbb4a88a08c8e612e46a, type: 2}
+  - {fileID: 11400000, guid: 12d665975ce46274cad4f8361f32ccf3, type: 2}
+  - {fileID: 11400000, guid: 03472708dfddd0144a7f0e52823671ad, type: 2}
+  - {fileID: 11400000, guid: 1468707821e33d644a62268fa077d03d, type: 2}
+  - {fileID: 11400000, guid: cbc3063feb018f54faf23fbbab29c1d5, type: 2}
+  - {fileID: 11400000, guid: 8154160621b9ca44b86c280ba2a5f988, type: 2}
+  - {fileID: 11400000, guid: 0d7d195b96ea7cc44be3f20f9156b3fe, type: 2}

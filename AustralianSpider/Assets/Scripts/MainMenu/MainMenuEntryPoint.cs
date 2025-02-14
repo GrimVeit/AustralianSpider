@@ -4,6 +4,8 @@ using UnityEngine;
 public class MainMenuEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private FaceCardDesignGroup faceCardDesignGroup;
+    [SerializeField] private CoverCardDesignGroup coverCardDesignGroup;
     [SerializeField] private UIMainMenuRoot menuRootPrefab;
 
     private UIMainMenuRoot sceneRoot;
@@ -13,9 +15,13 @@ public class MainMenuEntryPoint : MonoBehaviour
     private ParticleEffectPresenter particleEffectPresenter;
     private SoundPresenter soundPresenter;
 
+    private StoreFaceCardDesignPresenter storeFaceCardDesignPresenter;
+    private SelectFaceCardDesignPresenter selectFaceCardDesignPresenter;
+    private FaceCardDesignVisualizePresenter faceCardDesignVisualizePresenter;
+
     public void Run(UIRootView uIRootView)
     {
-        sceneRoot = Instantiate(menuRootPrefab);
+        sceneRoot = menuRootPrefab;
  
         uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
 
@@ -32,6 +38,12 @@ public class MainMenuEntryPoint : MonoBehaviour
 
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
 
+        storeFaceCardDesignPresenter = new StoreFaceCardDesignPresenter(new StoreFaceCardDesignModel(faceCardDesignGroup));
+
+        selectFaceCardDesignPresenter = new SelectFaceCardDesignPresenter(new SelectFaceCardDesignModel(), viewContainer.GetView<SelectFaceCardDesignView>());
+
+        faceCardDesignVisualizePresenter = new FaceCardDesignVisualizePresenter(new FaceCardDesignVisualizeModel(), viewContainer.GetView<FaceCardDesignVisualizeView>());
+
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
 
@@ -41,16 +53,36 @@ public class MainMenuEntryPoint : MonoBehaviour
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
+
+        faceCardDesignVisualizePresenter.Initialize();
+        selectFaceCardDesignPresenter.Initialize();
+        storeFaceCardDesignPresenter.Initialize();
     }
 
     private void ActivateEvents()
     {
         ActivateTransitionsSceneEvents();
+
+        Debug.Log("KKK");
+
+        storeFaceCardDesignPresenter.OnOpenFaceCardDesign += selectFaceCardDesignPresenter.SetOpenFaceCardDesign;
+        storeFaceCardDesignPresenter.OnCloseFaceCardDesign += selectFaceCardDesignPresenter.SetCloseFaceCardDesign;
+        selectFaceCardDesignPresenter.OnChooseFaceCardDesign += storeFaceCardDesignPresenter.SelectFaceCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign += selectFaceCardDesignPresenter.SelectFaceCardDesign;
+        storeFaceCardDesignPresenter.OnDeselectFaceCardDesign += selectFaceCardDesignPresenter.DeselectFaceCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign += faceCardDesignVisualizePresenter.SetFaceCardDesign;
     }
 
     private void DeactivateEvents()
     {
         DeactivateTransitionsSceneEvents();
+
+        storeFaceCardDesignPresenter.OnOpenFaceCardDesign -= selectFaceCardDesignPresenter.SetOpenFaceCardDesign;
+        storeFaceCardDesignPresenter.OnCloseFaceCardDesign -= selectFaceCardDesignPresenter.SetCloseFaceCardDesign;
+        selectFaceCardDesignPresenter.OnChooseFaceCardDesign -= storeFaceCardDesignPresenter.SelectFaceCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= selectFaceCardDesignPresenter.SelectFaceCardDesign;
+        storeFaceCardDesignPresenter.OnDeselectFaceCardDesign -= selectFaceCardDesignPresenter.DeselectFaceCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= faceCardDesignVisualizePresenter.SetFaceCardDesign;
     }
 
     private void ActivateTransitionsSceneEvents()
@@ -77,6 +109,10 @@ public class MainMenuEntryPoint : MonoBehaviour
         sceneRoot?.Dispose();
         particleEffectPresenter?.Dispose();
         bankPresenter?.Dispose();
+
+        faceCardDesignVisualizePresenter?.Dispose();
+        selectFaceCardDesignPresenter?.Dispose();
+        storeFaceCardDesignPresenter.Dispose();
     }
 
     private void OnDestroy()

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcdfbfb090fba74abf2b0da01fcf3ec, type: 3}
+  m_Name: Clubs_KRESTS_4
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: 409c5af4b5f477d4584ada6e11d1f9b8, type: 2}
+  - {fileID: 11400000, guid: d64f41c5d37a65f4a925d4ab2cdcf253, type: 2}
+  - {fileID: 11400000, guid: df57293e000b2eb4c9d6cde9a4307b88, type: 2}
+  - {fileID: 11400000, guid: e48d820703f23034db0e5090ffb2e4ca, type: 2}
+  - {fileID: 11400000, guid: c7192d09d7f55cb499be15cadb376b48, type: 2}
+  - {fileID: 11400000, guid: f6a3e9da8aa655f42ad2dc06a6c2020d, type: 2}
+  - {fileID: 11400000, guid: 23f8239d76a9ffb439306f67dea77045, type: 2}
+  - {fileID: 11400000, guid: 4fd767fe9640d7f4ea02ee596ef8e266, type: 2}
+  - {fileID: 11400000, guid: 815eacecfe4b0c142898a7e21b1b85af, type: 2}
+  - {fileID: 11400000, guid: 13380c1bdb9f10f449dd10a5ac26b285, type: 2}
+  - {fileID: 11400000, guid: 0ea919514ccdbca43983621d44de4e4e, type: 2}
+  - {fileID: 11400000, guid: 28ba80ca820bf834ba549da467fc4300, type: 2}
+  - {fileID: 11400000, guid: 5a6f9efdf2ac5a343b9702c43b1894d1, type: 2}

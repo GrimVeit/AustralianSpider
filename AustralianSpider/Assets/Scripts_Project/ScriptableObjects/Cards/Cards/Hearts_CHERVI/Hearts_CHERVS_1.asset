@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcdfbfb090fba74abf2b0da01fcf3ec, type: 3}
+  m_Name: Hearts_CHERVS_1
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: cb413ecba7476d742a98e9fc5bdc51b7, type: 2}
+  - {fileID: 11400000, guid: 9d900cd127585f44f9960093a2670f37, type: 2}
+  - {fileID: 11400000, guid: 9519be9925d0cff4daaf343cf955d70d, type: 2}
+  - {fileID: 11400000, guid: b784a62bae8f6cf429b14fc46f8302c2, type: 2}
+  - {fileID: 11400000, guid: 8da5c7bc982b9ab4b8ca5d4261e736b1, type: 2}
+  - {fileID: 11400000, guid: 982d16a5001574b499e624bcbf5cb6d5, type: 2}
+  - {fileID: 11400000, guid: a5f2f53ee3e121f4b93fd33427327748, type: 2}
+  - {fileID: 11400000, guid: 31190e3f8d1a21b4d8b5affd57454194, type: 2}
+  - {fileID: 11400000, guid: 3ffff2be1032a6e4aa940dd57fa0855b, type: 2}
+  - {fileID: 11400000, guid: 8927f7cd57fcde149bbba3818a8ad93e, type: 2}
+  - {fileID: 11400000, guid: 797f67952c45c1343b30fd79a935eb73, type: 2}
+  - {fileID: 11400000, guid: d071a1d031dc8d046a2d19b228fff5e6, type: 2}
+  - {fileID: 11400000, guid: afa8f4f062cda11408ca3db126353d11, type: 2}

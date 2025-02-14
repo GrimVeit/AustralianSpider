@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: FaceCardDesign_1
   m_EditorClassIdentifier: 
   id: 0
+  spriteDesign: {fileID: 21300000, guid: 8a8cb98cf8d81b9498ea34e03b1e1ffa, type: 3}
+  clubs_Krests: {fileID: 11400000, guid: 9ea10482893fe6d4c83e3b66e7e4beb9, type: 2}
+  diamonds_Bubns: {fileID: 11400000, guid: d60a74680e2782745a34245545477c5b, type: 2}
+  hearts_Chervs: {fileID: 11400000, guid: d2ea48c58c7adf64fb1910eeeaad4208, type: 2}
+  spades_Peaks: {fileID: 11400000, guid: 87d4d89d4b4acae41be6259393755e9d, type: 2}
