@@ -41,7 +41,7 @@ public class SelectGameDesign : MonoBehaviour
 
     public void CloseDesign()
     {
-        buttonSelect.enabled = true;
+        buttonSelect.enabled = false;
 
         objectClose.SetActive(true);
     }

@@ -54,7 +54,7 @@ public class StoreFaceCardDesignModel
                 }
                 else
                 {
-                    faceCardDesignDatas.Add(new FaceCardDesignData(true, false));
+                    faceCardDesignDatas.Add(new FaceCardDesignData(false, false));
                 }
             }
         }

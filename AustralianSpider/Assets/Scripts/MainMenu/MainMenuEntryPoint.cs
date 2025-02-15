@@ -20,6 +20,7 @@ public class MainMenuEntryPoint : MonoBehaviour
     private StoreFaceCardDesignPresenter storeFaceCardDesignPresenter;
     private SelectFaceCardDesignPresenter selectFaceCardDesignPresenter;
     private FaceCardDesignVisualizePresenter faceCardDesignVisualizePresenter;
+    private BuyFaceCardDesignPresenter buyFaceCardDesignPresenter;
 
     private StoreCoverCardDesignPresenter storeCoverCardDesignPresenter;
     private SelectCoverCardDesignPresenter selectCoverCardDesignPresenter;
@@ -29,6 +30,7 @@ public class MainMenuEntryPoint : MonoBehaviour
     private StoreGameDesignPresenter storeGameDesignPresenter;
     private SelectGameDesignPresenter selectGameDesignPresenter;
     private GameDesignVisualizePresenter gameDesignVisualizePresenter;
+    private BuyGameDesignPresenter buyGameDesignPresenter;
 
     public void Run(UIRootView uIRootView)
     {
@@ -52,6 +54,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeFaceCardDesignPresenter = new StoreFaceCardDesignPresenter(new StoreFaceCardDesignModel(faceCardDesignGroup));
         selectFaceCardDesignPresenter = new SelectFaceCardDesignPresenter(new SelectFaceCardDesignModel(), viewContainer.GetView<SelectFaceCardDesignView>());
         faceCardDesignVisualizePresenter = new FaceCardDesignVisualizePresenter(new FaceCardDesignVisualizeModel(), viewContainer.GetView<FaceCardDesignVisualizeView>());
+        buyFaceCardDesignPresenter = new BuyFaceCardDesignPresenter(new BuyFaceCardDesignModel(PlayerPrefsKeys.BUY_LEVEL_FACE_CARD, buyDesignPrices, bankPresenter), viewContainer.GetView<BuyFaceCardDesignView>());
 
         storeCoverCardDesignPresenter = new StoreCoverCardDesignPresenter(new StoreCoverCardDesignModel(coverCardDesignGroup));
         selectCoverCardDesignPresenter = new SelectCoverCardDesignPresenter(new SelectCoverCardDesignModel(), viewContainer.GetView<SelectCoverCardDesignView>());
@@ -61,6 +64,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeGameDesignPresenter = new StoreGameDesignPresenter(new StoreGameDesignModel(gameDesignGroup));
         selectGameDesignPresenter = new SelectGameDesignPresenter(new SelectGameDesignModel(), viewContainer.GetView<SelectGameDesignView>());
         gameDesignVisualizePresenter = new GameDesignVisualizePresenter(new GameDesignVisualizeModel(), viewContainer.GetView<GameDesignVisualizeView>());
+        buyGameDesignPresenter = new BuyGameDesignPresenter(new BuyGameDesignModel(PlayerPrefsKeys.BUY_LEVEL_BACKGROUND, buyDesignPrices, bankPresenter), viewContainer.GetView<BuyGameDesignView>());
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -73,7 +77,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         bankPresenter.Initialize();
 
 
-
+        buyGameDesignPresenter.Initialize();
         gameDesignVisualizePresenter.Initialize();
         selectGameDesignPresenter.Initialize();
 
@@ -81,6 +85,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         coverCardDesignVisualizePresenter.Initialize();
         selectCoverCardDesignPresenter.Initialize();
 
+        buyFaceCardDesignPresenter.Initialize();
         faceCardDesignVisualizePresenter.Initialize();
         selectFaceCardDesignPresenter.Initialize();
 
@@ -104,6 +109,13 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeFaceCardDesignPresenter.OnDeselectFaceCardDesign += selectFaceCardDesignPresenter.DeselectFaceCardDesign;
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign += faceCardDesignVisualizePresenter.SetFaceCardDesign;
 
+        storeFaceCardDesignPresenter.OnOpenFaceCardDesign += buyFaceCardDesignPresenter.SetOpenCoverCardDesign;
+        storeFaceCardDesignPresenter.OnCloseFaceCardDesign += buyFaceCardDesignPresenter.SetCloseCoverCardDesign;
+        buyFaceCardDesignPresenter.OnBuyFaceCardDesign += storeFaceCardDesignPresenter.BuyFaceCardDesign;
+
+
+
+
 
         storeCoverCardDesignPresenter.OnOpenCoverCardDesign += selectCoverCardDesignPresenter.SetOpenCoverCardDesign;
         storeCoverCardDesignPresenter.OnCloseCoverCardDesign += selectCoverCardDesignPresenter.SetCloseCoverCardDesign;
@@ -117,12 +129,19 @@ public class MainMenuEntryPoint : MonoBehaviour
         buyCoverCardDesignPresenter.OnBuyCoverCardDesign += storeCoverCardDesignPresenter.BuyCoverCardDesign;
 
 
+
+
+
         storeGameDesignPresenter.OnOpenGameDesign += selectGameDesignPresenter.SetOpenGameDesign;
         storeGameDesignPresenter.OnCloseGameDesign += selectGameDesignPresenter.SetCloseGameDesign;
         selectGameDesignPresenter.OnChooseCoverCardDesign += storeGameDesignPresenter.SelectGameDesign;
         storeGameDesignPresenter.OnSelectGameDesign += selectGameDesignPresenter.SelectGameDesign;
         storeGameDesignPresenter.OnDeselectGameDesign += selectGameDesignPresenter.DeselectGameDesign;
         storeGameDesignPresenter.OnSelectGameDesign += gameDesignVisualizePresenter.SetGameDesign;
+
+        storeGameDesignPresenter.OnOpenGameDesign += buyGameDesignPresenter.SetOpenGameDesign;
+        storeGameDesignPresenter.OnCloseGameDesign += buyGameDesignPresenter.SetCloseGameDesign;
+        buyGameDesignPresenter.OnBuyFaceCardDesign += storeGameDesignPresenter.BuyGameDesign;
     }
 
     private void DeactivateEvents()
@@ -135,6 +154,10 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= selectFaceCardDesignPresenter.SelectFaceCardDesign;
         storeFaceCardDesignPresenter.OnDeselectFaceCardDesign -= selectFaceCardDesignPresenter.DeselectFaceCardDesign;
         storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= faceCardDesignVisualizePresenter.SetFaceCardDesign;
+
+        storeFaceCardDesignPresenter.OnOpenFaceCardDesign -= buyFaceCardDesignPresenter.SetOpenCoverCardDesign;
+        storeFaceCardDesignPresenter.OnCloseFaceCardDesign -= buyFaceCardDesignPresenter.SetCloseCoverCardDesign;
+        buyFaceCardDesignPresenter.OnBuyFaceCardDesign -= storeFaceCardDesignPresenter.BuyFaceCardDesign;
 
 
         storeCoverCardDesignPresenter.OnOpenCoverCardDesign -= selectCoverCardDesignPresenter.SetOpenCoverCardDesign;
@@ -155,6 +178,10 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeGameDesignPresenter.OnSelectGameDesign -= selectGameDesignPresenter.SelectGameDesign;
         storeGameDesignPresenter.OnDeselectGameDesign -= selectGameDesignPresenter.DeselectGameDesign;
         storeGameDesignPresenter.OnSelectGameDesign -= gameDesignVisualizePresenter.SetGameDesign;
+
+        storeGameDesignPresenter.OnOpenGameDesign -= buyGameDesignPresenter.SetOpenGameDesign;
+        storeGameDesignPresenter.OnCloseGameDesign -= buyGameDesignPresenter.SetCloseGameDesign;
+        buyGameDesignPresenter.OnBuyFaceCardDesign -= storeGameDesignPresenter.BuyGameDesign;
     }
 
     private void ActivateTransitionsSceneEvents()
@@ -184,6 +211,7 @@ public class MainMenuEntryPoint : MonoBehaviour
 
 
 
+        buyGameDesignPresenter?.Dispose();
         gameDesignVisualizePresenter?.Dispose();
         selectGameDesignPresenter?.Dispose();
 
@@ -191,6 +219,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         coverCardDesignVisualizePresenter?.Dispose();
         selectCoverCardDesignPresenter?.Dispose();
 
+        buyFaceCardDesignPresenter?.Dispose();
         faceCardDesignVisualizePresenter?.Dispose();
         selectFaceCardDesignPresenter?.Dispose();
 

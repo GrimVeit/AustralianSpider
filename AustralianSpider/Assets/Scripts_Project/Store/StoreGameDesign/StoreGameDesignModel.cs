@@ -53,7 +53,7 @@ public class StoreGameDesignModel
                 }
                 else
                 {
-                    gameDesignDatas.Add(new GameDesignData(true, false));
+                    gameDesignDatas.Add(new GameDesignData(false, false));
                 }
             }
         }
