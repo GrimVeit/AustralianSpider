@@ -6,6 +6,7 @@ public class MainMenuEntryPoint : MonoBehaviour
     [SerializeField] private Sounds sounds;
     [SerializeField] private FaceCardDesignGroup faceCardDesignGroup;
     [SerializeField] private CoverCardDesignGroup coverCardDesignGroup;
+    [SerializeField] private GameDesignGroup gameDesignGroup;
     [SerializeField] private UIMainMenuRoot menuRootPrefab;
 
     private UIMainMenuRoot sceneRoot;

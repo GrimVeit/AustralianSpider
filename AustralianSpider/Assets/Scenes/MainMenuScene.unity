@@ -3666,6 +3666,7 @@ MonoBehaviour:
   sounds: {fileID: 2002616254}
   faceCardDesignGroup: {fileID: 11400000, guid: 5fead6f1551230847a145358113c98f0, type: 2}
   coverCardDesignGroup: {fileID: 11400000, guid: 852d329d723d61c4a8d7e8fdafdbf568, type: 2}
+  gameDesignGroup: {fileID: 11400000, guid: 8281b3a18b58e2646a0f1d41850f4067, type: 2}
   menuRootPrefab: {fileID: 8508999539158046858}
 --- !u!1 &931670147
 GameObject:

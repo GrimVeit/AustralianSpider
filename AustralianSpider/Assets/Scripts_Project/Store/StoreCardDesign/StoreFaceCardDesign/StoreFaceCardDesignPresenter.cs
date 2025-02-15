@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class StoreFaceCardDesignPresenter
 {
-    private StoreFaceCardDesignModel model;
+    private readonly StoreFaceCardDesignModel model;
 
     public StoreFaceCardDesignPresenter(StoreFaceCardDesignModel model)
     {
