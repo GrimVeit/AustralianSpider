@@ -22,7 +22,7 @@ public class SelectGameDesignView : View
 
         if (gameDesign == null)
         {
-            Debug.Log("KKK");
+            //Debug.Log("KKK");
             gameDesign = Instantiate(selectGameDesignPrefab, transformParent);
             gameDesign.OnChooseGameDesign += HandleChooseGameDesign;
             gameDesign.SetData(design);
@@ -31,7 +31,7 @@ public class SelectGameDesignView : View
             selectGameDesigns.Add(gameDesign);
         }
 
-        Debug.Log("KKK");
+        //Debug.Log("KKK");
 
         gameDesign.OpenDesign();
     }

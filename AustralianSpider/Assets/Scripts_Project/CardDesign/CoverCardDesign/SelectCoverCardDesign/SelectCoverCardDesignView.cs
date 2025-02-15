@@ -22,7 +22,7 @@ public class SelectCoverCardDesignView : View
 
         if (faceCardDesign == null)
         {
-            Debug.Log("KKK");
+            //Debug.Log("KKK");
             faceCardDesign = Instantiate(selectCoverCardDesignPrefab, transformParent);
             faceCardDesign.OnChooseCoverCardDesign += HandleChooseCoverCardDesign;
             faceCardDesign.SetData(design);
@@ -31,7 +31,7 @@ public class SelectCoverCardDesignView : View
             selectCoverCardDesigns.Add(faceCardDesign);
         }
 
-        Debug.Log("KKK");
+        //Debug.Log("KKK");
 
         faceCardDesign.OpenDesign();
     }

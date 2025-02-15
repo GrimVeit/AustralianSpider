@@ -35,13 +35,13 @@ public class StoreCoverCardDesignModel
             string loadedJson = File.ReadAllText(FilePath);
             CoverCardDesignDatas faceCardDesignDatas = JsonUtility.FromJson<CoverCardDesignDatas>(loadedJson);
 
-            Debug.Log("Success");
+            //Debug.Log("Success");
 
             this.coverCardDesignDatas = faceCardDesignDatas.Datas.ToList();
         }
         else
         {
-            Debug.Log("HDBNJJJJJJJJJJJJJJJJJJJJJJ");
+            //Debug.Log("HDBNJJJJJJJJJJJJJJJJJJJJJJ");
 
             coverCardDesignDatas = new List<CoverCardDesignData>();
 
@@ -53,7 +53,7 @@ public class StoreCoverCardDesignModel
                 }
                 else
                 {
-                    coverCardDesignDatas.Add(new CoverCardDesignData(true, false));
+                    coverCardDesignDatas.Add(new CoverCardDesignData(false, false));
                 }
             }
         }

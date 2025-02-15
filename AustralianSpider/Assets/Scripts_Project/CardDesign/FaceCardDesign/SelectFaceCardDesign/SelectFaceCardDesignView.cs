@@ -21,7 +21,7 @@ public class SelectFaceCardDesignView : View
 
         if(faceCardDesign == null)
         {
-            Debug.Log("KKK");
+            //Debug.Log("KKK");
             faceCardDesign = Instantiate(selectFaceCardDesignPrefab, transformParent);
             faceCardDesign.OnChooseFaceCardDesign += HandleChooseFaceCardDesign;
             faceCardDesign.SetData(design);
@@ -30,7 +30,7 @@ public class SelectFaceCardDesignView : View
             selectFaceCardDesigns.Add(faceCardDesign);
         }
 
-        Debug.Log("KKK");
+        //Debug.Log("KKK");
 
         faceCardDesign.OpenDesign();
     }

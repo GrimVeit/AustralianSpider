@@ -41,7 +41,7 @@ public class SelectCoverCardDesign : MonoBehaviour
 
     public void CloseDesign()
     {
-        buttonSelect.enabled = true;
+        buttonSelect.enabled = false;
 
         objectClose.SetActive(true);
     }
