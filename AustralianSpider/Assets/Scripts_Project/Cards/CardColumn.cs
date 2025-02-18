@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class CardColumn : MonoBehaviour
 {
     public List<CardMove> Cards = new List<CardMove>();
-    //public VerticalLayoutGroup VerticalLayoutGroup;
+    public VerticalLayoutGroup VerticalLayoutGroup;
 
-    [SerializeField] private Transform contentScrollView;
+    [SerializeField] public Transform ContentScrollView;
 
-    public int YCardOffset = 2;
+    public int YCardOffset = 10;
 
     public void RefreshRenderOrder()
     {
         for (int i = 0; i < Cards.Count; i++)
         {
-            Cards[i].SetZOrder(i);
+            //Cards[i].SetZOrder(i);
         }
     }
 
@@ -30,10 +30,10 @@ public class CardColumn : MonoBehaviour
 
     public void AddCard(CardMove card)
     {
-        card.transform.SetParent(contentScrollView);
+        card.transform.SetParent(ContentScrollView);
         card.ParentColumn = this;
         Cards.Add(card);
-        card.SetZOrder(Cards.Count);
+        //card.SetZOrder(Cards.Count);
     }
 
     public void AddCards(List<CardMove> cards)
@@ -109,14 +109,18 @@ public class CardColumn : MonoBehaviour
             {
                 var doneCards = Cards.GetRange(i, (Cards.Count) - i);
 
-                RemoveCards(doneCards);
-                RefreshPickable();
-                //Move cards from table.
                 for (int u = 0; u < doneCards.Count; u++)
                 {
-                    doneCards[u].Pickable = false;
-                    doneCards[u].transform.position = new Vector3(-1, 0);
+                    //doneCards[u].Pickable = false;
+                    //doneCards[u].transform.position = new Vector3(-1, 0);
+
+                    doneCards[u].gameObject.SetActive(false);
                 }
+
+                Debug.Log("WOW");
+
+                RemoveCards(doneCards);
+                RefreshPickable();
             }
             value++;
         }

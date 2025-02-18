@@ -1,8 +1,11 @@
 using DG.Tweening.Core.Easing;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
@@ -10,14 +13,12 @@ public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     public int Value;
     public Sprite Sprite;
     public Sprite CarbackSprite;
+    public Transform TransformParent;
 
     //Questionable
     public CardColumn ParentColumn;
 
-    private Vector3 dragOffset;
-    private Vector3 originalPosition;
-
-    public List<CardMove> Children;
+    public List<CardMove> Children = new List<CardMove>();
 
     public bool Pickable
     {
@@ -58,6 +59,8 @@ public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private bool picked;
 
     private Image spriteRenderer;
+    private RectTransform rectTransform => transform.GetComponent<RectTransform>();
+    private CanvasGroup canvasGroup => GetComponent<CanvasGroup>();
 
     private Image SpriteRenderer
     {
@@ -88,7 +91,6 @@ public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         //Children = ParentColumn.GetChildrenCards(this);
     }
-
     private void OnMouseDrag()
     {
         //if (!Pickable)
@@ -115,14 +117,6 @@ public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         //        Children[i].SetZOrder(111 + i);
         //    }
     }
-
-    public void SetZOrder(int orderInLayer)
-    {
-        this.transform.position = new Vector3(transform.position.x,
-            transform.position.y,
-            orderInLayer * -1);
-    }
-
     private void OnMouseUp()
     {
         //if (!picked)
@@ -132,46 +126,79 @@ public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         //ParentColumn.VerticalLayoutGroup.enabled = true;
     }
 
+    //public void SetZOrder(int orderInLayer)
+    //{
+    //    this.transform.position = new Vector3(transform.position.x,
+    //        transform.position.y,
+    //        orderInLayer * -1);
+    //}
+
     public void ReturnToOriginalPosition()
     {
-        this.transform.position = originalPosition;
+        ParentColumn.VerticalLayoutGroup.enabled = true;
+        transform.SetParent(ParentColumn.ContentScrollView);
 
-        MoveChildren(originalPosition);
+        if (Children != null)
+            for (int i = 0; i < Children.Count; i++)
+            {
+                Children[i].canvasGroup.blocksRaycasts = true;
+                Children[i].transform.SetParent(ParentColumn.ContentScrollView);
+            }
 
-        //ParentColumn.RefreshRenderOrder();
+        //MoveChildren(originalPosition);
 
-        //ParentColumn.VerticalLayoutGroup.enabled = true;
+        ParentColumn.RefreshRenderOrder();
+
+        ParentColumn.VerticalLayoutGroup.enabled = true;
     }
 
     private void MoveChildren(Vector2 newPos)
     {
         if (Children != null)
+            //for (int i = 0; i < Children.Count; i++)
+            //{
+            //    Children[i].rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y + (i + 1) * ParentColumn.YCardOffset);
+            //}
             for (int i = 0; i < Children.Count; i++)
             {
-                Children[i].transform.position = new Vector2(newPos.x, newPos.y + (i + 1) * ParentColumn.YCardOffset);
+                Children[i].rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y + (i + 1) * ParentColumn.YCardOffset);
             }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        dragOffset = this.transform.position - mousePos;
-
-        //ParentColumn.VerticalLayoutGroup.enabled = false;
+        canvasGroup.blocksRaycasts = false;
 
         picked = false;
-        originalPosition = transform.position;
-
-        Debug.Log(Value + "//");
 
         Children = ParentColumn.GetChildrenCards(this);
+
+        transform.SetParent(TransformParent);
+
+        if (Children != null)
+            for (int i = 0; i < Children.Count; i++)
+            {
+                Children[i].canvasGroup.blocksRaycasts = false;
+                Children[i].transform.SetParent(transform);
+            }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!picked)
             return;
-        CardManager.Instance?.SortDropedCard(this);
+        CardManager.Instance?.SortDropedCard(eventData, this);
+
+        canvasGroup.blocksRaycasts = true;
+
+        transform.SetParent(ParentColumn.ContentScrollView);
+
+        if(Children != null)
+            for (int i = 0; i < Children.Count; i++)
+            {
+                Children[i].canvasGroup.blocksRaycasts = true;
+                Children[i].transform.SetParent(Children[i].ParentColumn.ContentScrollView);
+            }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -181,23 +208,19 @@ public class CardMove : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         picked = true;
 
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector3 newPosition = mousePos + dragOffset;
+        //this.transform.position = new Vector2(newPosition.x, newPosition.y);
 
-        Vector3 newPosition = mousePos + dragOffset;
-
-        this.transform.position = new Vector2(newPosition.x, newPosition.y);
-
-        Debug.Log(Value + "//");
-
-        MoveChildren(newPosition);
+        rectTransform.anchoredPosition += eventData.delta;
 
         //When card is Draged
-        SetZOrder(110);
+        //SetZOrder(110);
 
-        if (Children != null)
-            for (int i = 0; i < Children.Count; i++)
-            {
-                Children[i].SetZOrder(111 + i);
-            }
+        //if (Children != null)
+        //    for (int i = 0; i < Children.Count; i++)
+        //    {
+        //        Children[i].SetZOrder(111 + i);
+        //    }
     }
 }

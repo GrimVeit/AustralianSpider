@@ -4,6 +4,7 @@ using DG.Tweening.Core.Easing;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class CardManager : MonoBehaviour
 {
@@ -129,6 +130,8 @@ public class CardManager : MonoBehaviour
             AllCards[DealtCardsIndex].Fliped = true;
             AllCards[DealtCardsIndex].Pickable = true;
             Columns[i].AddCard(AllCards[DealtCardsIndex]);
+
+            Columns[i].RefreshPickable();
             DealtCardsIndex++;
         }
     }
@@ -195,31 +198,80 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void SortDropedCard(CardMove card)
+    public void SortDropedCard(PointerEventData pointerEventData, CardMove card)
     {
-        var colX = card.transform.position.x / 1.1f;
+        //var colX = card.transform.position.x / 1.1f;
 
-        int colNum = Mathf.RoundToInt(colX);
+        //int colNum = Mathf.RoundToInt(colX);
 
-        if (Columns[colNum].CanBeDroped(card))
+        Debug.Log("Check");
+
+        if (pointerEventData.pointerEnter != null)
         {
-            if (card.Children != null)
-                card.ParentColumn.RemoveCards(card.Children);
-            card.ParentColumn.RemoveCard(card);
-            card.ParentColumn.RefreshPickable();
+            Debug.Log(pointerEventData.pointerEnter.gameObject.name);
 
-            Columns[colNum].AddCard(card);
-            if (card.Children != null)
-                Columns[colNum].AddCards(card.Children);
+            if (pointerEventData.pointerEnter.TryGetComponent(out CardColumn cardColumn))
+            {
+                Debug.Log(pointerEventData);
 
-            Columns[colNum].RefreshPickable();
-            Columns[colNum].CheckFinishedSequence();
+                if (cardColumn.CanBeDroped(card))
+                {
+                    Debug.Log("Drop it");
 
+                    if (card.Children != null)
+                        card.ParentColumn.RemoveCards(card.Children);
+                    card.ParentColumn.RemoveCard(card);
+                    card.ParentColumn.RefreshPickable();
+
+                    cardColumn.AddCard(card);
+
+                    if (card.Children != null)
+                        cardColumn.AddCards(card.Children);
+
+                    cardColumn.RefreshPickable();
+                    cardColumn.CheckFinishedSequence();
+
+                }
+                else
+                {
+                    Debug.Log("Back");
+
+                    card.ReturnToOriginalPosition();
+                }
+            }
+            else
+            {
+                Debug.Log("Back");
+
+                card.ReturnToOriginalPosition();
+            }
         }
         else
         {
+            Debug.Log("Back");
+
             card.ReturnToOriginalPosition();
         }
+
+        //if (Columns[colNum].CanBeDroped(card))
+        //{
+        //    if (card.Children != null)
+        //        card.ParentColumn.RemoveCards(card.Children);
+        //    card.ParentColumn.RemoveCard(card);
+        //    card.ParentColumn.RefreshPickable();
+
+        //    Columns[colNum].AddCard(card);
+        //    if (card.Children != null)
+        //        Columns[colNum].AddCards(card.Children);
+
+        //    Columns[colNum].RefreshPickable();
+        //    Columns[colNum].CheckFinishedSequence();
+
+        //}
+        //else
+        //{
+        //    card.ReturnToOriginalPosition();
+        //}
     }
 }
 
