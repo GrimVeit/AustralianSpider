@@ -5,6 +5,9 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
     [SerializeField] private GameDesignGroup gameDesignGroup;
+    [SerializeField] private CoverCardDesignGroup coverCardDesignGroup;
+    [SerializeField] private FaceCardDesignGroup faceCardDesignGroup;
+    [SerializeField] private GameTypeGroup gameTypeGroup;
     [SerializeField] private UIMiniGameSceneRoot sceneRootPrefab;
 
     private UIMiniGameSceneRoot sceneRoot;
@@ -16,6 +19,13 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
     private StoreGameDesignPresenter storeGameDesignPresenter;
     private GameDesignPresenter gameDesignPresenter;
+
+    private StoreCoverCardDesignPresenter storeCoverCardDesignPresenter;
+    private StoreFaceCardDesignPresenter storeFaceCardDesignPresenter;
+    private StoreGameTypePresenter storeGameTypePresenter;
+
+    private StoreCardPresenter storeCardPresenter;
+    private CardColumnPresenter cardColumnPresenter;
 
     public void Run(UIRootView uIRootView)
     {
@@ -43,10 +53,26 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         storeGameDesignPresenter = new StoreGameDesignPresenter(new StoreGameDesignModel(gameDesignGroup));
         gameDesignPresenter = new GameDesignPresenter(new GameDesignModel(), viewContainer.GetView<GameDesignView>());
 
+        storeCoverCardDesignPresenter = new StoreCoverCardDesignPresenter(new StoreCoverCardDesignModel(coverCardDesignGroup));
+        storeFaceCardDesignPresenter = new StoreFaceCardDesignPresenter(new StoreFaceCardDesignModel(faceCardDesignGroup));
+        storeGameTypePresenter = new StoreGameTypePresenter(new StoreGameTypeModel(gameTypeGroup));
+
+        storeCardPresenter = new StoreCardPresenter(new StoreCardModel(), viewContainer.GetView<StoreCardView>());
+        cardColumnPresenter = new CardColumnPresenter(new CardColumnModel(), viewContainer.GetView<CardColumnView>());
+
         ActivateEvents();
 
         gameDesignPresenter.Initialize();
         storeGameDesignPresenter.Initialize();
+
+        cardColumnPresenter.Initialize();
+        storeCoverCardDesignPresenter.Initialize();
+        storeFaceCardDesignPresenter.Initialize();
+        storeGameTypePresenter.Initialize();
+        storeCardPresenter.Initialize();
+
+        storeCardPresenter.CreateCards();
+        storeCardPresenter.DealCards();
     }
 
     private void ActivateEvents()
@@ -54,6 +80,12 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         ActivateTransitionEvents();
 
         storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
+
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign += storeCardPresenter.SetCoverCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign += storeCardPresenter.SetFaceCardDesign;
+        storeGameTypePresenter.OnSelectGameType += storeCardPresenter.SetGameType;
+
+        storeCardPresenter.OnDealCards += cardColumnPresenter.DealCards;
     }
 
     private void DeactivateEvents()
@@ -61,6 +93,12 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         DeactivateTransitionEvents();
 
         storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
+
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= storeCardPresenter.SetCoverCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= storeCardPresenter.SetFaceCardDesign;
+        storeGameTypePresenter.OnSelectGameType -= storeCardPresenter.SetGameType;
+
+        storeCardPresenter.OnDealCards -= cardColumnPresenter.DealCards;
     }
 
     private void ActivateTransitionEvents()
@@ -85,6 +123,13 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
         gameDesignPresenter?.Dispose();
         storeGameDesignPresenter?.Dispose();
+
+
+        cardColumnPresenter?.Dispose();
+        storeCoverCardDesignPresenter?.Dispose();
+        storeFaceCardDesignPresenter?.Dispose();
+        storeGameTypePresenter?.Dispose();
+        storeCardPresenter?.Dispose();
     }
 
     private void OnDestroy()
