@@ -4,6 +4,7 @@ using UnityEngine;
 public class MiniGameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private GameDesignGroup gameDesignGroup;
     [SerializeField] private UIMiniGameSceneRoot sceneRootPrefab;
 
     private UIMiniGameSceneRoot sceneRoot;
@@ -13,9 +14,12 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
     private ParticleEffectPresenter particleEffectPresenter;
     private BankPresenter bankPresenter;
 
+    private StoreGameDesignPresenter storeGameDesignPresenter;
+    private GameDesignPresenter gameDesignPresenter;
+
     public void Run(UIRootView uIRootView)
     {
-        sceneRoot = Instantiate(sceneRootPrefab);
+        sceneRoot = sceneRootPrefab;
 
         uIRootView.AttachSceneUI(sceneRoot.gameObject, Camera.main);
 
@@ -36,28 +40,39 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
         bankPresenter.Initialize();
 
+        storeGameDesignPresenter = new StoreGameDesignPresenter(new StoreGameDesignModel(gameDesignGroup));
+        gameDesignPresenter = new GameDesignPresenter(new GameDesignModel(), viewContainer.GetView<GameDesignView>());
+
         ActivateEvents();
+
+        gameDesignPresenter.Initialize();
+        storeGameDesignPresenter.Initialize();
     }
 
     private void ActivateEvents()
     {
-        
         ActivateTransitionEvents();
+
+        storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
     }
 
     private void DeactivateEvents()
     {
         DeactivateTransitionEvents();
+
+        storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
     }
 
     private void ActivateTransitionEvents()
     {
-
+        sceneRoot.OnClickToExit += HandleGoToMainMenu;
+        sceneRoot.OnClickToRestart += HandleGoToGame;
     }
 
     private void DeactivateTransitionEvents()
     {
-
+        sceneRoot.OnClickToExit -= HandleGoToMainMenu;
+        sceneRoot.OnClickToRestart -= HandleGoToGame;
     }
 
     public void Dispose()
@@ -67,18 +82,29 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         sceneRoot?.Dispose();
         soundPresenter?.Dispose();
         bankPresenter?.Dispose();
-    }
 
-    #region Input
+        gameDesignPresenter?.Dispose();
+        storeGameDesignPresenter?.Dispose();
+    }
 
     private void OnDestroy()
     {
         Dispose();
     }
 
+    #region Input
+
     public event Action OnGoToMainMenu;
+    public event Action OnGoToGame;
 
     private void HandleGoToMainMenu()
+    {
+        sceneRoot.Deactivate();
+        soundPresenter.Dispose();
+        OnGoToMainMenu?.Invoke();
+    }
+
+    private void HandleGoToGame()
     {
         sceneRoot.Deactivate();
         soundPresenter.Dispose();

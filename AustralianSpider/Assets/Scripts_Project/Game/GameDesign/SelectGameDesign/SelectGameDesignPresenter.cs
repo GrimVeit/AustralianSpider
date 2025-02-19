@@ -52,7 +52,7 @@ public class SelectGameDesignPresenter
 
     #region Input
 
-    public event Action<int> OnChooseCoverCardDesign
+    public event Action<int> OnChooseGameDesign
     {
         add { model.OnChooseGameDesign += value; }
         remove { model.OnChooseGameDesign -= value; }

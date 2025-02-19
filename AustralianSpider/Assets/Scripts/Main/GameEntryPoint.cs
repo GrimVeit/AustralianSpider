@@ -18,7 +18,7 @@ public class GameEntryPoint
 
     }
 
-    //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Autorun()
     {
         GlobalGameSettings();
@@ -43,6 +43,8 @@ public class GameEntryPoint
     {
         rootView.SetLoadScreen(0);
 
+        Screen.orientation = ScreenOrientation.Portrait;
+
         yield return rootView.ShowLoadingScreen();
 
         yield return LoadScene(Scenes.BOOT);
@@ -59,6 +61,9 @@ public class GameEntryPoint
     private IEnumerator LoadAndStartMiniGameScene()
     {
         rootView.SetLoadScreen(1);
+
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+
         yield return rootView.ShowLoadingScreen();
 
         yield return new WaitForSeconds(0.3f);
@@ -72,6 +77,7 @@ public class GameEntryPoint
         sceneEntryPoint.Run(rootView);
 
         sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
+        sceneEntryPoint.OnGoToGame += () => coroutines.StartCoroutine(LoadAndStartMiniGameScene());
 
 
         yield return rootView.HideLoadingScreen();
