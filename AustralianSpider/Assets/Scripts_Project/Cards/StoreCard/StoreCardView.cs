@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreCardView : View
 {
     public event Action<List<CardInteractive>> OnDealCards;
+    public event Action<List<CardInteractive>> OnDealCardsFromStock;
 
-
+    [SerializeField] private Button buttonTest;
     [SerializeField] private CardInteractive cardMovePrefab;
     [SerializeField] private Transform transformCardParent;
 
@@ -17,6 +19,18 @@ public class StoreCardView : View
     private FaceCardDesign currentFaceCardDesign;
 
     [SerializeField] private List<CardInteractive> allCardInteractives = new List<CardInteractive>();
+
+    public int sendCardCount;
+
+    public void Initialize()
+    {
+        buttonTest.onClick.AddListener(DealCardsFromStock);
+    }
+
+    public void Dispose()
+    {
+        buttonTest.onClick.RemoveListener(DealCardsFromStock);
+    }
 
     public void SetGameType(GameType gameType)
     {
@@ -45,7 +59,21 @@ public class StoreCardView : View
 
     public void DealCards()
     {
-        OnDealCards?.Invoke(allCardInteractives.Take(54).ToList());
+        OnDealCards?.Invoke(allCardInteractives.GetRange(0, 54));
+        sendCardCount = 54;
+    }
+
+    public void DealCardsFromStock()
+    {
+        int startIndex = sendCardCount;
+
+        if(startIndex < allCardInteractives.Count)
+        {
+            int batchSize = Math.Min(10, allCardInteractives.Count - startIndex);
+            OnDealCardsFromStock?.Invoke(allCardInteractives.GetRange(startIndex, batchSize));
+
+            sendCardCount += batchSize;
+        }
     }
 
     private void CreateCards(CardType cardType)

@@ -18,9 +18,15 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             pickable = value;
 
             if (!pickable)
+            {
+                canvasGroup.blocksRaycasts = false;
                 image.color = Color.gray;
+            }
             else
+            {
+                canvasGroup.blocksRaycasts = true;
                 image.color = Color.white;
+            }
         }
     }
     public bool Fliped
@@ -47,14 +53,13 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public int Value => currentCardData.CardId;
     public Sprite Sprite => currentCardData.Sprite;
     public Sprite CarbackSprite;
-    public Transform TransformParent;
     public Card currentCardData;
 
     //Questionable
     public Column ParentColumn;
 
     private bool fliped;
-    private bool pickable = true;
+    private bool pickable = false;
     private bool picked;
 
     private Image spriteRenderer;
@@ -79,7 +84,6 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void SetData(Card card, Sprite spriteCover, Transform transformParent)
     {
         this.currentCardData = card;
-        TransformParent = transformParent;
         CarbackSprite = spriteCover;
 
         image.sprite = spriteCover;
@@ -95,6 +99,8 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         ParentColumn.VerticalLayoutGroup.enabled = true;
         transform.SetParent(ParentColumn.ContentScrollView);
 
+        canvasGroup.blocksRaycasts = true;
+
         if (Children != null)
             for (int i = 0; i < Children.Count; i++)
             {
@@ -107,28 +113,31 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(!Pickable)
+            return;
+
         canvasGroup.blocksRaycasts = false;
 
-        picked = false;
+        picked = true;
 
         Children = ParentColumn.GetChildrenCards(this);
-
-        transform.SetParent(TransformParent);
-
         if (Children != null)
             for (int i = 0; i < Children.Count; i++)
             {
                 Children[i].canvasGroup.blocksRaycasts = false;
                 Children[i].transform.SetParent(transform);
             }
+
+        OnPickedCard?.Invoke(this);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!picked)
+        if (!Pickable)
             return;
 
-        OnDroppedCard?.Invoke(eventData, this);
+        if (!picked)
+            return;
 
         canvasGroup.blocksRaycasts = true;
 
@@ -140,6 +149,8 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
                 Children[i].canvasGroup.blocksRaycasts = true;
                 Children[i].transform.SetParent(Children[i].ParentColumn.ContentScrollView);
             }
+
+        OnDroppedCard?.Invoke(eventData, this);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -156,6 +167,7 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     #region Input
 
+    public event Action<CardInteractive> OnPickedCard;
     public event Action<PointerEventData, CardInteractive> OnDroppedCard;
 
     #endregion

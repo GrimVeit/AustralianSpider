@@ -18,12 +18,14 @@ public class StoreCardPresenter
 
     public void Initialize()
     {
-
+        view.Initialize();
     }
 
     public void Dispose()
     {
         DeactivateEvents();
+
+        view.Dispose();
     }
 
     private void ActivateEvents()
@@ -52,6 +54,12 @@ public class StoreCardPresenter
     {
         add { view.OnDealCards += value; }
         remove { view.OnDealCards -= value; }
+    }
+
+    public event Action<List<CardInteractive>> OnDealCardsFromStock
+    {
+        add { view.OnDealCardsFromStock += value; }
+        remove { view.OnDealCardsFromStock -= value; }
     }
 
     public void SetCoverCardDesign(CoverCardDesign coverCardDesign)

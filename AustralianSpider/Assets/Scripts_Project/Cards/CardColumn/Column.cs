@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,6 +43,7 @@ public class Column : MonoBehaviour
         if (Cards.Count > 0)
             if (!Cards[Cards.Count - 1].Fliped)
             {
+                Debug.Log("Открытие новой карты - " + Cards[Cards.Count - 1].Value);
                 Cards[Cards.Count - 1].Fliped = true;
                 Cards[Cards.Count - 1].Pickable = true;
             }
@@ -73,14 +75,22 @@ public class Column : MonoBehaviour
             return;
 
         for (int i = 0; i < Cards.Count; i++)
+        {
             Cards[i].Pickable = false;
+        }
 
         Cards[Cards.Count - 1].Pickable = true;
         for (int i = Cards.Count - 2; i >= 0; i--)
         {
             if (Cards[i].Value == Cards[i + 1].Value + 1 && Cards[i].Fliped &&
                 Cards[i].CardType == Cards[i + 1].CardType)
+            {
+                if (!Cards[i].Pickable)
+                {
+                    Debug.Log("junkm");
+                }
                 Cards[i].Pickable = true;
+            }
             else
                 break;
         }
@@ -113,8 +123,16 @@ public class Column : MonoBehaviour
 
                 RemoveCards(doneCards);
                 RefreshPickable();
+
+                OnFullCompleteLevel?.Invoke();
             }
             value++;
         }
     }
+
+    #region Input
+
+    public event Action OnFullCompleteLevel;
+
+    #endregion
 }

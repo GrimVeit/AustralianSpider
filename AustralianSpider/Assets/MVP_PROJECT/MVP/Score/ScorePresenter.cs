@@ -29,40 +29,34 @@ public class ScorePresenter
 
     private void ActivateEvents()
     {
-        scoreModel.OnAddHealth += scoreView.AddHealth;
-        scoreModel.OnRemoveHealth += scoreView.RemoveHealth;
-        scoreModel.OnChangeAllCountCoins += scoreView.DisplayCoins;
+        scoreModel.OnChangeAllCountScore += scoreView.DisplayCoins;
     }
 
     private void DeactivateEvents()
     {
-        scoreModel.OnAddHealth -= scoreView.AddHealth;
-        scoreModel.OnRemoveHealth -= scoreView.RemoveHealth;
-        scoreModel.OnChangeAllCountCoins -= scoreView.DisplayCoins;
+        scoreModel.OnChangeAllCountScore -= scoreView.DisplayCoins;
     }
 
     #region Input
 
-    public event Action OnGameWinned
+    public void AddScore(int score = 1)
     {
-        add { scoreModel.OnGameWinned += value; }
-        remove { scoreModel.OnGameWinned -= value; }
+        scoreModel.AddScore(score);
     }
 
-    public event Action OnGameFailed
+    public void RemoveHealth(int score = 1)
     {
-        add { scoreModel.OnGameFailed += value; }
-        remove { scoreModel.OnGameFailed -= value; }
+        scoreModel.RemoveScore(score);
     }
 
-    public void AddScore()
+    public void AddScoreByFullComplect()
     {
-        scoreModel.AddScore();
+        scoreModel.AddScore(101);
     }
 
-    public void RemoveHealth()
+    public void RemoveScoreByCardDrop()
     {
-        scoreModel.RemoveHealth();
+        scoreModel.RemoveScore(1);
     }
 
     #endregion

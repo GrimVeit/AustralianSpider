@@ -3,19 +3,9 @@ using UnityEngine;
 
 public class ScoreModel
 {
-    public event Action OnGameWinned;
-    public event Action OnGameFailed;
+    public event Action<int> OnChangeAllCountScore;
 
-
-    public event Action OnRemoveHealth;
-    public event Action<int> OnAddHealth;
-
-    public event Action<int> OnChangeAllCountCoins;
-    public event Action<int> OnGetCoins;
-
-    private int currentRecord;
-
-    private int currentHealth;
+    private int currentScore;
 
     private IMoneyProvider moneyProvider;
     private ISoundProvider soundProvider;
@@ -28,56 +18,28 @@ public class ScoreModel
 
     public void Initialize()
     {
-        currentHealth = 5;
-        currentRecord = 0;
-        OnAddHealth?.Invoke(currentHealth);
+        currentScore = 0;
+        OnChangeAllCountScore?.Invoke(currentScore);
     }
 
 
     public void Dispose()
     {
-
-    }
-
-
-    public void RemoveHealth()
-    {
-        currentHealth -= 1;
-
-        if (currentHealth > 0)
+        if(currentScore > 0)
         {
-            Debug.Log("Минус жизка");
-            OnRemoveHealth?.Invoke();
-            //soundProvider.PlayOneShot("FallEgg");
-            return;
-        }
-
-        if (currentHealth == 0)
-        {
-            Debug.Log("Проигрыш");
-            OnRemoveHealth?.Invoke();
-            OnGameFailed?.Invoke();
-            //soundProvider.PlayOneShot("Success");
-            //particleEffectProvider.Play("Win");
+            moneyProvider.SendMoney(currentScore);
         }
     }
     
-    public void AddScore()
+    public void AddScore(int score)
     {
-        currentRecord += 1;
-        OnChangeAllCountCoins?.Invoke(currentRecord);
-        AddCoins(1);
-
-        if(currentRecord == 30)
-        {
-            OnGameWinned?.Invoke();
-        }
+        currentScore += score;
+        OnChangeAllCountScore?.Invoke(currentScore);
     }
 
-    private void AddCoins(int coins)
+    public void RemoveScore(int score)
     {
-        moneyProvider.SendMoney(coins);
-        OnGetCoins?.Invoke(coins);
-
+        currentScore -= score;
+        OnChangeAllCountScore?.Invoke(currentScore);
     }
 }

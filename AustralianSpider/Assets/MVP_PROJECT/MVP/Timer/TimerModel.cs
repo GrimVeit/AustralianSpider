@@ -10,47 +10,64 @@ public class TimerModel
     public event Action OnStopTimer;
     public event Action<int> OnItterationTimer;
 
-    private bool isActive;
+    private IEnumerator spawnEggs_ienumerator;
+    private bool isPaused = false;
 
-    private IEnumerator timerCoroutine;
+    private int time = 0;
 
-    public void ActivateTimer(int seconds)
+    public void ActivateTimer()
     {
-        isActive = true;
-
-        if (timerCoroutine != null)
-            Coroutines.Stop(timerCoroutine);
-
-        timerCoroutine = Timer_Coroutine(seconds);
-        Coroutines.Start(timerCoroutine);
-
         OnActivateTimer?.Invoke();
+
+        time = 0;
+
+        if (spawnEggs_ienumerator != null)
+            Coroutines.Stop(spawnEggs_ienumerator);
+
+        spawnEggs_ienumerator = timer_Coroutine();
+        Coroutines.Start(spawnEggs_ienumerator);
+
+        Debug.Log("Старт таймера");
     }
 
     public void DeactivateTimer()
     {
-        isActive = false;
-
-        if (timerCoroutine != null)
-            Coroutines.Stop(timerCoroutine);
-
         OnDeactivateTimer?.Invoke();
+
+        if (spawnEggs_ienumerator != null)
+            Coroutines.Stop(spawnEggs_ienumerator);
+
+        Debug.Log("Конец таймера");
     }
 
-    private IEnumerator Timer_Coroutine(int seconds)
+    public void PauseTimer()
     {
-        OnStartTimer?.Invoke();
+        isPaused = true;
 
-        int duration = seconds;
+        Debug.Log("Пауза таймера");
+    }
 
-        while(duration > 0)
+    public void ResumeTimer()
+    {
+        if (spawnEggs_ienumerator == null)
+            ActivateTimer();
+
+        isPaused = false;
+
+        Debug.Log("Продолжение таймера");
+    }
+
+    private IEnumerator timer_Coroutine()
+    {
+        while (true)
         {
-            OnItterationTimer?.Invoke(duration);
-            yield return new WaitForSeconds(1);
-            duration -= 1;
-        }
+            yield return new WaitUntil(() => !isPaused);
 
-        if(isActive)
-           OnStopTimer?.Invoke();
+            time += 1;
+            OnItterationTimer?.Invoke(time);
+
+            yield return new WaitForSeconds(1);
+
+        }
     }
 }

@@ -39,14 +39,24 @@ public class TimerPresenter
 
     #region Input
 
-    public void ActivateTimer(int seconds)
+    public void ActivateTimer()
     {
-        timerModel.ActivateTimer(seconds);
+        timerModel.ActivateTimer();
     }
 
     public void DeactivateTimer()
     {
         timerModel.DeactivateTimer();
+    }
+
+    public void PauseTimer()
+    {
+        timerModel.PauseTimer();
+    }
+
+    public void ResumeTimer()
+    {
+        timerModel.ResumeTimer();
     }
 
     public event Action OnStopTimer
