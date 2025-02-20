@@ -29,6 +29,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
     private TimerPresenter timerPresenter;
     private ScorePresenter scorePresenter;
+    private MotionCounterPresenter motionCounterPresenter;
 
     public void Run(UIRootView uIRootView)
     {
@@ -65,11 +66,13 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
         timerPresenter = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_MinutesSeconds>());
         scorePresenter = new ScorePresenter(new ScoreModel(bankPresenter, soundPresenter), viewContainer.GetView<ScoreView>());
+        motionCounterPresenter = new MotionCounterPresenter(new MotionCounterModel(bankPresenter, soundPresenter), viewContainer.GetView<MotionCounterView>());
 
         ActivateEvents();
 
         timerPresenter.Initialize();
         scorePresenter.Initialize();
+        motionCounterPresenter.Initialize();
 
         gameDesignPresenter.Initialize();
         storeGameDesignPresenter.Initialize();
@@ -100,6 +103,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
         cardColumnPresenter.OnCardDrop += scorePresenter.RemoveScoreByCardDrop;
         cardColumnPresenter.OnFullCompleteCardGroup += scorePresenter.AddScoreByFullComplect;
+        cardColumnPresenter.OnCardDrop += motionCounterPresenter.AddMotion;
     }
 
     private void DeactivateEvents()
@@ -117,6 +121,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
         cardColumnPresenter.OnCardDrop -= scorePresenter.RemoveScoreByCardDrop;
         cardColumnPresenter.OnFullCompleteCardGroup -= scorePresenter.AddScoreByFullComplect;
+        cardColumnPresenter.OnCardDrop -= motionCounterPresenter.AddMotion;
     }
 
     private void ActivateTransitionEvents()
@@ -141,6 +146,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
         timerPresenter?.Dispose();
         scorePresenter?.Dispose();
+        motionCounterPresenter?.Dispose();
 
         gameDesignPresenter?.Dispose();
         storeGameDesignPresenter?.Dispose();
