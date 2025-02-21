@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class StoreCardView : View
 {
-    public event Action<List<CardInteractive>> OnDealCards;
-    public event Action<List<CardInteractive>> OnDealCardsFromStock;
+    public event Action<List<CardInteractive>> OnDealCards_Value;
+    public event Action<List<CardInteractive>> OnDealCardsFromStock_Value;
+    public event Action OnDealCardsFromStock;
 
     [SerializeField] private Button buttonTest;
     [SerializeField] private CardInteractive cardMovePrefab;
@@ -59,7 +60,7 @@ public class StoreCardView : View
 
     public void DealCards()
     {
-        OnDealCards?.Invoke(allCardInteractives.GetRange(0, 54));
+        OnDealCards_Value?.Invoke(allCardInteractives.GetRange(0, 54));
         sendCardCount = 54;
     }
 
@@ -70,7 +71,8 @@ public class StoreCardView : View
         if(startIndex < allCardInteractives.Count)
         {
             int batchSize = Math.Min(10, allCardInteractives.Count - startIndex);
-            OnDealCardsFromStock?.Invoke(allCardInteractives.GetRange(startIndex, batchSize));
+            OnDealCardsFromStock_Value?.Invoke(allCardInteractives.GetRange(startIndex, batchSize));
+            OnDealCardsFromStock?.Invoke();
 
             sendCardCount += batchSize;
         }

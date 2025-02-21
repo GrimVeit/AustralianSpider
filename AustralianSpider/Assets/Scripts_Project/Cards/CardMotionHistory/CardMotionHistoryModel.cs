@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CardMotionHistoryModel
 {
+    public event Action OnActivate;
+    public event Action OnDeactivate;
     public event Action<CardInteractive, List<CardInteractive>, Column> OnRemoveLastMotion;
 
     private List<CardMotionHistory> cardMotionHistories = new List<CardMotionHistory>();
@@ -14,6 +16,8 @@ public class CardMotionHistoryModel
         Debug.Log(cardInteractive.Value + "//" + column.name);
 
         cardMotionHistories.Add(new CardMotionHistory(cardInteractive, column));
+
+        OnActivate?.Invoke();
     }
 
     public void ReturmLastMotion()
@@ -30,11 +34,18 @@ public class CardMotionHistoryModel
 
             cardMotionHistories.Remove(motion);
         }
+
+        if(cardMotionHistories.Count == 0)
+        {
+            OnDeactivate?.Invoke();
+        }
     }
 
     public void ClearHistory()
     {
         cardMotionHistories.Clear();
+
+        OnDeactivate?.Invoke();
     }
 }
 

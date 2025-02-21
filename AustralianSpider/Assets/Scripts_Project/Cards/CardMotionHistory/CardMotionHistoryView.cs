@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class CardMotionHistoryView : View
 {
     [SerializeField] private Button buttonReturmLastMotion;
+    [SerializeField] private Image imageButton;
+    [SerializeField] private Sprite spriteActive;
+    [SerializeField] private Sprite spriteDeactive;
 
     public void Initialize()
     {
@@ -16,6 +19,16 @@ public class CardMotionHistoryView : View
     public void Dispose()
     {
         buttonReturmLastMotion.onClick.RemoveListener(()=> OnClickToReturnButton?.Invoke());
+    }
+
+    public void Activate()
+    {
+        imageButton.sprite = spriteActive;
+    }
+
+    public void Deactivate()
+    {
+        imageButton.sprite = spriteDeactive;
     }
 
     #region Input

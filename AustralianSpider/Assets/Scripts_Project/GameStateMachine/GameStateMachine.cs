@@ -9,10 +9,17 @@ public class GameStateMachine : IGlobalStateMachine
 
     private IState currentState;
 
-    public GameStateMachine()
+    public GameStateMachine(
+        StoreGameDesignPresenter storeGameDesignPresenter,
+        StoreCoverCardDesignPresenter storeCoverCardDesignPresenter,
+        StoreFaceCardDesignPresenter storeFaceCardDesignPresenter,
+        StoreGameTypePresenter storeGameTypePresenter,
+        StoreCardPresenter storeCardPresenter,
+        GameDesignPresenter gameDesignPresenter,
+        CardColumnPresenter cardColumnPresenter)
     {
-        states[typeof(StartState_Game)] = new StartState_Game();
-        states[typeof(MainState_Game)] = new MainState_Game();
+        states[typeof(StartState_Game)] = new StartState_Game(this, storeGameDesignPresenter, storeCoverCardDesignPresenter, storeFaceCardDesignPresenter, storeGameTypePresenter, storeCardPresenter, gameDesignPresenter, cardColumnPresenter);
+        states[typeof(MainState_Game)] = new MainState_Game(this);
         states[typeof(ExitState_Game)] = new ExitState_Game();
         states[typeof(RestartState_Game)] = new RestartState_Game();
         states[typeof(WinState_Game)] = new WinState_Game();

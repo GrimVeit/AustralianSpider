@@ -95,42 +95,44 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
     {
         ActivateTransitionEvents();
 
-        storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
+        //storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
 
-        storeCoverCardDesignPresenter.OnSelectCoverCardDesign += storeCardPresenter.SetCoverCardDesign;
-        storeFaceCardDesignPresenter.OnSelectFaceCardDesign += storeCardPresenter.SetFaceCardDesign;
-        storeGameTypePresenter.OnSelectGameType += storeCardPresenter.SetGameType;
+        //storeCoverCardDesignPresenter.OnSelectCoverCardDesign += storeCardPresenter.SetCoverCardDesign;
+        //storeFaceCardDesignPresenter.OnSelectFaceCardDesign += storeCardPresenter.SetFaceCardDesign;
+        //storeGameTypePresenter.OnSelectGameType += storeCardPresenter.SetGameType;
 
-        storeCardPresenter.OnDealCards += cardColumnPresenter.DealCards;
-        storeCardPresenter.OnDealCardsFromStock += cardColumnPresenter.DealCardsFromStock;
+        //storeCardPresenter.OnDealCards_Value += cardColumnPresenter.DealCards;
+        //storeCardPresenter.OnDealCardsFromStock_Value += cardColumnPresenter.DealCardsFromStock;
 
-        cardColumnPresenter.OnCardDrop += scorePresenter.RemoveScoreByCardDrop;
-        cardColumnPresenter.OnFullCompleteCardGroup += scorePresenter.AddScoreByFullComplect;
-        cardColumnPresenter.OnCardDrop += motionCounterPresenter.AddMotion;
+        //cardColumnPresenter.OnCardDrop += scorePresenter.RemoveScoreByCardDrop;
+        //cardColumnPresenter.OnFullCompleteCardGroup += scorePresenter.AddScoreByFullComplect;
+        //cardColumnPresenter.OnCardDrop += motionCounterPresenter.AddMotion;
 
-        cardColumnPresenter.OnCardDrop_Value += cardMotionHistoryPresenter.AddMotion;
-        cardMotionHistoryPresenter.OnRemoveLastMotion += cardColumnPresenter.ReturnLastMotion;
+        //cardColumnPresenter.OnCardDrop_Value += cardMotionHistoryPresenter.AddMotion;
+        //cardMotionHistoryPresenter.OnRemoveLastMotion += cardColumnPresenter.ReturnLastMotion;
+        //cardColumnPresenter.OnFullCompleteCardGroup += cardMotionHistoryPresenter.CleanHistory;
+        //storeCardPresenter.OnDealCardsFromStock += cardMotionHistoryPresenter.CleanHistory;
     }
 
     private void DeactivateEvents()
     {
         DeactivateTransitionEvents();
 
-        storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
+        //storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
 
-        storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= storeCardPresenter.SetCoverCardDesign;
-        storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= storeCardPresenter.SetFaceCardDesign;
-        storeGameTypePresenter.OnSelectGameType -= storeCardPresenter.SetGameType;
+        //storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= storeCardPresenter.SetCoverCardDesign;
+        //storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= storeCardPresenter.SetFaceCardDesign;
+        //storeGameTypePresenter.OnSelectGameType -= storeCardPresenter.SetGameType;
 
-        storeCardPresenter.OnDealCards -= cardColumnPresenter.DealCards;
-        storeCardPresenter.OnDealCardsFromStock -= cardColumnPresenter.DealCardsFromStock;
+        //storeCardPresenter.OnDealCards_Value -= cardColumnPresenter.DealCards;
+        //storeCardPresenter.OnDealCardsFromStock_Value -= cardColumnPresenter.DealCardsFromStock;
 
-        cardColumnPresenter.OnCardDrop -= scorePresenter.RemoveScoreByCardDrop;
-        cardColumnPresenter.OnFullCompleteCardGroup -= scorePresenter.AddScoreByFullComplect;
-        cardColumnPresenter.OnCardDrop -= motionCounterPresenter.AddMotion;
+        //cardColumnPresenter.OnCardDrop -= scorePresenter.RemoveScoreByCardDrop;
+        //cardColumnPresenter.OnFullCompleteCardGroup -= scorePresenter.AddScoreByFullComplect;
+        //cardColumnPresenter.OnCardDrop -= motionCounterPresenter.AddMotion;
 
-        cardColumnPresenter.OnCardDrop_Value -= cardMotionHistoryPresenter.AddMotion;
-        cardMotionHistoryPresenter.OnRemoveLastMotion -= cardColumnPresenter.ReturnLastMotion;
+        //cardColumnPresenter.OnCardDrop_Value -= cardMotionHistoryPresenter.AddMotion;
+        //cardMotionHistoryPresenter.OnRemoveLastMotion -= cardColumnPresenter.ReturnLastMotion;
     }
 
     private void ActivateTransitionEvents()

@@ -9,6 +9,7 @@ public class UIMiniGameSceneRoot : MonoBehaviour
     [SerializeField] private MainPanel_Game mainPanel;
     [SerializeField] private RestartPanel_Game restartPanel;
     [SerializeField] private ExitPanel_Game exitPanel;
+    [SerializeField] private WinPanel_Game winPanel;
 
     private ISoundProvider soundProvider;
 
@@ -25,6 +26,7 @@ public class UIMiniGameSceneRoot : MonoBehaviour
         mainPanel.Initialize();
         restartPanel.Initialize();
         exitPanel.Initialize();
+        winPanel.Initialize();
     }
 
     public void Dispose()
@@ -33,6 +35,7 @@ public class UIMiniGameSceneRoot : MonoBehaviour
         mainPanel.Dispose();
         restartPanel.Dispose();
         exitPanel.Dispose();
+        winPanel.Dispose();
     }
 
 
@@ -100,12 +103,30 @@ public class UIMiniGameSceneRoot : MonoBehaviour
 
 
 
+    public void OpenWinPanel()
+    {
+        if(winPanel.IsActive) return;
+
+        OpenOtherPanel(winPanel);
+    }
+
+    public void CloseWinPanel()
+    {
+        if(!winPanel.IsActive) return;
+
+        CloseOtherPanel(winPanel);
+    }
+
+
+
+
+
     public void Activate()
     {
-        headerPanel.OnClickToExit += OpenExitPanel;
-        headerPanel.OnClickToRestart += OpenRestartPanel;
-        restartPanel.OnClickToCancel += CloseRestartPanel;
-        exitPanel.OnClickToCancel += CloseExitPanel;
+        restartPanel.OnClickToRestart += HandleClickToRestart;
+        exitPanel.OnClickToExit += HandleClickToExit;
+        winPanel.OnClickToRestart += HandleClickToRestart;
+        winPanel.OnClickToExit += HandleClickToExit;
 
         OpenMainPanel();
         OpenHeaderPanel();
@@ -113,15 +134,15 @@ public class UIMiniGameSceneRoot : MonoBehaviour
 
     public void Deactivate()
     {
-        headerPanel.OnClickToExit -= OpenExitPanel;
-        headerPanel.OnClickToRestart -= OpenRestartPanel;
-        restartPanel.OnClickToCancel -= CloseRestartPanel;
-        exitPanel.OnClickToCancel -= CloseExitPanel;
+        restartPanel.OnClickToRestart -= HandleClickToRestart;
+        exitPanel.OnClickToExit -= HandleClickToExit;
+        winPanel.OnClickToRestart -= HandleClickToRestart;
+        winPanel.OnClickToExit -= HandleClickToExit;
 
         if (currentPanel != null)
            CloseOtherPanel(currentPanel);
 
-        CloseHeaderPanel();
+        CloseWinPanel();
     }
 
 
@@ -148,17 +169,45 @@ public class UIMiniGameSceneRoot : MonoBehaviour
 
     #region Input
 
-    
-    public event Action OnClickToRestart
+    public event Action OnClickToRestart_Header
     {
-        add { restartPanel.OnClickToRestart += value; }
-        remove { restartPanel.OnClickToRestart -= value; }
+        add { headerPanel.OnClickToRestart += value; }
+        remove { headerPanel.OnClickToRestart -= value; }
     }
 
-    public event Action OnClickToExit
+    public event Action OnClickToExit_Header
     {
-        add { exitPanel.OnClickToExit += value; }
-        remove { exitPanel.OnClickToExit -= value; }
+        add { headerPanel.OnClickToExit += value; }
+        remove { headerPanel.OnClickToExit -= value; }
+    }
+
+    public event Action OnClickToCancel_Exit
+    {
+        add { exitPanel.OnClickToCancel += value; }
+        remove { exitPanel.OnClickToCancel -= value; }
+    }
+
+    public event Action OnClickToCancel_Restart
+    {
+        add { restartPanel.OnClickToCancel += value; }
+        remove { restartPanel.OnClickToCancel -= value; }
+    }
+
+
+
+
+
+    public event Action OnClickToRestart;
+    public event Action OnClickToExit;
+
+    private void HandleClickToRestart()
+    {
+        OnClickToRestart?.Invoke();
+    }
+
+    private void HandleClickToExit()
+    {
+        OnClickToExit?.Invoke();
     }
 
 

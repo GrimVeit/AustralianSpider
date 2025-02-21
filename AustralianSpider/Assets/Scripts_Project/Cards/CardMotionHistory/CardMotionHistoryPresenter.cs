@@ -31,11 +31,17 @@ public class CardMotionHistoryPresenter : MonoBehaviour
     private void ActivateEvents()
     {
         view.OnClickToReturnButton += model.ReturmLastMotion;
+
+        model.OnActivate += view.Activate;
+        model.OnDeactivate += view.Deactivate;
     }
 
     private void DeactivateEvents()
     {
         view.OnClickToReturnButton -= model.ReturmLastMotion;
+
+        model.OnActivate -= view.Activate;
+        model.OnDeactivate -= view.Deactivate;
     }
 
     #region Input
