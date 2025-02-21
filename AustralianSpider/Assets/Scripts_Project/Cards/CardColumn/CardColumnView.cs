@@ -78,10 +78,6 @@ public class CardColumnView : View
 
     public void SortDropedCard(PointerEventData pointerEventData, CardInteractive card)
     {
-        //var colX = card.transform.position.x / 1.1f;
-
-        //int colNum = Mathf.RoundToInt(colX);
-
         if (pointerEventData.pointerEnter != null)
         {
             Debug.Log(pointerEventData.pointerEnter.gameObject.name);
@@ -90,6 +86,9 @@ public class CardColumnView : View
             {
                 if (cardColumn.CanBeDroped(card))
                 {
+
+                    OnCardDrop_Value?.Invoke(card, card.ParentColumn);
+
                     if (card.Children != null)
                         card.ParentColumn.RemoveCards(card.Children);
                     card.ParentColumn.RemoveCard(card);
@@ -122,10 +121,33 @@ public class CardColumnView : View
         }
     }
 
+    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column)
+    {
+        cardInteractive.CleanChildrens();
+        cardInteractive.SetChildrens(childrens);
+
+        if (cardInteractive.Children != null)
+            cardInteractive.ParentColumn.RemoveCards(cardInteractive.Children);
+
+        cardInteractive.ParentColumn.RemoveCard(cardInteractive);
+        cardInteractive.ParentColumn.RefreshPickable();
+
+        column.AddCard(cardInteractive);
+
+        if (cardInteractive.Children != null)
+            column.AddCards(cardInteractive.Children);
+
+        column.RefreshPickable();
+        column.CheckFinishedSequence();
+
+        OnCardDrop?.Invoke();
+    }
+
     #region Input
 
     public event Action OnFullCompleteLevelGroup;
     public event Action OnCardDrop;
+    public event Action<CardInteractive, Column> OnCardDrop_Value;
 
     private void HandleFullCompleteLevelGroup()
     {

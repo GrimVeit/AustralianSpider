@@ -131,6 +131,26 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         OnPickedCard?.Invoke(this);
     }
 
+    public void SetChildrens(List<CardInteractive> children)
+    {
+        if (children != null)
+        for (int i = 0; i < children.Count; i++)
+        {
+            children[i].canvasGroup.blocksRaycasts = false;
+            children[i].transform.SetParent(transform);
+        }
+    }
+
+    public void CleanChildrens()
+    {
+        if(Children != null)
+        for (int i = 0; i < Children.Count; i++)
+        {
+            Children[i].canvasGroup.blocksRaycasts = true;
+            Children[i].transform.SetParent(Children[i].ParentColumn.ContentScrollView);
+        }
+    }
+
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!Pickable)

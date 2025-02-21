@@ -30,18 +30,22 @@ public class CardColumnPresenter
     {
         model.OnDealCards += view.DealCards;
         model.OnDealCardsFromStock += view.DealCardsFromStock;
+        model.OnReturnLastMotion += view.ReturnLastMotion;
 
         view.OnFullCompleteLevelGroup += model.FullCompleteCardGroup;
         view.OnCardDrop += model.CardDrop;
+        view.OnCardDrop_Value += model.CardDrop;
     }
 
     private void DeactivateEvents()
     {
         model.OnDealCards -= view.DealCards;
         model.OnDealCardsFromStock -= view.DealCardsFromStock;
+        model.OnReturnLastMotion -= view.ReturnLastMotion;
 
         view.OnFullCompleteLevelGroup -= model.FullCompleteCardGroup;
         view.OnCardDrop -= model.CardDrop;
+        view.OnCardDrop_Value -= model.CardDrop;
     }
 
     #region Input
@@ -62,6 +66,18 @@ public class CardColumnPresenter
     {
         add { model.OnCardDrop += value; }
         remove { model.OnCardDrop -= value; }
+    }
+
+    public event Action<CardInteractive, Column> OnCardDrop_Value
+    {
+        add { model.OnCardDrop_Value += value; }
+        remove { model.OnCardDrop_Value -= value; }
+    }
+
+
+    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column)
+    {
+        model.ReturnLastMotion(cardInteractive, childrens, column);
     }
 
 

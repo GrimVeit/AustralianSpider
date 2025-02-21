@@ -26,6 +26,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
     private StoreCardPresenter storeCardPresenter;
     private CardColumnPresenter cardColumnPresenter;
+    private CardMotionHistoryPresenter cardMotionHistoryPresenter;
 
     private TimerPresenter timerPresenter;
     private ScorePresenter scorePresenter;
@@ -63,6 +64,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
 
         storeCardPresenter = new StoreCardPresenter(new StoreCardModel(), viewContainer.GetView<StoreCardView>());
         cardColumnPresenter = new CardColumnPresenter(new CardColumnModel(), viewContainer.GetView<CardColumnView>());
+        cardMotionHistoryPresenter = new CardMotionHistoryPresenter(new CardMotionHistoryModel(), viewContainer.GetView<CardMotionHistoryView>());
 
         timerPresenter = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_MinutesSeconds>());
         scorePresenter = new ScorePresenter(new ScoreModel(bankPresenter, soundPresenter), viewContainer.GetView<ScoreView>());
@@ -77,6 +79,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         gameDesignPresenter.Initialize();
         storeGameDesignPresenter.Initialize();
 
+        cardMotionHistoryPresenter.Initialize();
         cardColumnPresenter.Initialize();
         storeCoverCardDesignPresenter.Initialize();
         storeFaceCardDesignPresenter.Initialize();
@@ -104,6 +107,9 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         cardColumnPresenter.OnCardDrop += scorePresenter.RemoveScoreByCardDrop;
         cardColumnPresenter.OnFullCompleteCardGroup += scorePresenter.AddScoreByFullComplect;
         cardColumnPresenter.OnCardDrop += motionCounterPresenter.AddMotion;
+
+        cardColumnPresenter.OnCardDrop_Value += cardMotionHistoryPresenter.AddMotion;
+        cardMotionHistoryPresenter.OnRemoveLastMotion += cardColumnPresenter.ReturnLastMotion;
     }
 
     private void DeactivateEvents()
@@ -122,6 +128,9 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         cardColumnPresenter.OnCardDrop -= scorePresenter.RemoveScoreByCardDrop;
         cardColumnPresenter.OnFullCompleteCardGroup -= scorePresenter.AddScoreByFullComplect;
         cardColumnPresenter.OnCardDrop -= motionCounterPresenter.AddMotion;
+
+        cardColumnPresenter.OnCardDrop_Value -= cardMotionHistoryPresenter.AddMotion;
+        cardMotionHistoryPresenter.OnRemoveLastMotion -= cardColumnPresenter.ReturnLastMotion;
     }
 
     private void ActivateTransitionEvents()
@@ -147,6 +156,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         timerPresenter?.Dispose();
         scorePresenter?.Dispose();
         motionCounterPresenter?.Dispose();
+        cardMotionHistoryPresenter?.Dispose();
 
         gameDesignPresenter?.Dispose();
         storeGameDesignPresenter?.Dispose();
