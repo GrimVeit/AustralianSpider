@@ -52,6 +52,8 @@ public class TimerModel
         if (spawnEggs_ienumerator == null)
             ActivateTimer();
 
+        if (!isPaused) return; 
+
         isPaused = false;
 
         Debug.Log("Продолжение таймера");

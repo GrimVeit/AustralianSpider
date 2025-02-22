@@ -12,12 +12,12 @@ public class CardMotionHistoryPresenter : MonoBehaviour
     {
         this.model = model;
         this.view = view;
+
+        ActivateEvents();
     }
 
     public void Initialize()
     {
-        ActivateEvents();
-
         view.Initialize();
     }
 
@@ -46,15 +46,15 @@ public class CardMotionHistoryPresenter : MonoBehaviour
 
     #region Input
 
-    public event Action<CardInteractive, List<CardInteractive>, Column> OnRemoveLastMotion
+    public event Action<CardInteractive, List<CardInteractive>, Column, bool> OnRemoveLastMotion
     {
         add { model.OnRemoveLastMotion += value; }
         remove { model.OnRemoveLastMotion -= value; }
     }
 
-    public void AddMotion(CardInteractive cardInteractive, Column column)
+    public void AddMotion(CardInteractive cardInteractive, Column column, bool isActiveHigherCard)
     {
-        model.AddMotion(cardInteractive, column);
+        model.AddMotion(cardInteractive, column, isActiveHigherCard);
     }
 
     public void CleanHistory()

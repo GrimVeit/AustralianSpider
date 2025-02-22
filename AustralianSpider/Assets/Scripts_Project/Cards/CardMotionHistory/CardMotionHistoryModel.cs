@@ -7,15 +7,15 @@ public class CardMotionHistoryModel
 {
     public event Action OnActivate;
     public event Action OnDeactivate;
-    public event Action<CardInteractive, List<CardInteractive>, Column> OnRemoveLastMotion;
+    public event Action<CardInteractive, List<CardInteractive>, Column, bool> OnRemoveLastMotion;
 
     private List<CardMotionHistory> cardMotionHistories = new List<CardMotionHistory>();
 
-    public void AddMotion(CardInteractive cardInteractive, Column column)
+    public void AddMotion(CardInteractive cardInteractive, Column column, bool isActiveHigherCard)
     {
         Debug.Log(cardInteractive.Value + "//" + column.name);
 
-        cardMotionHistories.Add(new CardMotionHistory(cardInteractive, column));
+        cardMotionHistories.Add(new CardMotionHistory(cardInteractive, column, isActiveHigherCard));
 
         OnActivate?.Invoke();
     }
@@ -30,7 +30,7 @@ public class CardMotionHistoryModel
 
             var motion = cardMotionHistories[^1];
 
-            OnRemoveLastMotion?.Invoke(motion.cardInteractive, motion.cardChildrens, motion.column);
+            OnRemoveLastMotion?.Invoke(motion.cardInteractive, motion.cardChildrens, motion.column, motion.isActiveHigherCard);
 
             cardMotionHistories.Remove(motion);
         }
@@ -54,11 +54,13 @@ public class CardMotionHistory
     public CardInteractive cardInteractive;
     public Column column;
     public List<CardInteractive> cardChildrens;
+    public bool isActiveHigherCard;
 
-    public CardMotionHistory(CardInteractive cardInteractive, Column column)
+    public CardMotionHistory(CardInteractive cardInteractive, Column column, bool isActiveHigherCard)
     {
         this.cardInteractive = cardInteractive;
         this.column = column;
+        this.isActiveHigherCard = isActiveHigherCard;
         cardChildrens = cardInteractive.Children;
     }
 }

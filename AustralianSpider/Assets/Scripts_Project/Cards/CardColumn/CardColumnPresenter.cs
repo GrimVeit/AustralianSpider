@@ -10,12 +10,12 @@ public class CardColumnPresenter
     {
         this.model = model;
         this.view = view;
+
+        ActivateEvents();
     }
 
     public void Initialize()
     {
-        ActivateEvents();
-
         view.Initialize();
     }
 
@@ -32,7 +32,7 @@ public class CardColumnPresenter
         model.OnDealCardsFromStock += view.DealCardsFromStock;
         model.OnReturnLastMotion += view.ReturnLastMotion;
 
-        view.OnFullCompleteLevelGroup += model.FullCompleteCardGroup;
+        view.OnFullComplectCards += model.FullCompleteCardGroup;
         view.OnCardDrop += model.CardDrop;
         view.OnCardDrop_Value += model.CardDrop;
     }
@@ -43,7 +43,7 @@ public class CardColumnPresenter
         model.OnDealCardsFromStock -= view.DealCardsFromStock;
         model.OnReturnLastMotion -= view.ReturnLastMotion;
 
-        view.OnFullCompleteLevelGroup -= model.FullCompleteCardGroup;
+        view.OnFullComplectCards -= model.FullCompleteCardGroup;
         view.OnCardDrop -= model.CardDrop;
         view.OnCardDrop_Value -= model.CardDrop;
     }
@@ -68,16 +68,16 @@ public class CardColumnPresenter
         remove { model.OnCardDrop -= value; }
     }
 
-    public event Action<CardInteractive, Column> OnCardDrop_Value
+    public event Action<CardInteractive, Column, bool> OnCardDrop_Value
     {
         add { model.OnCardDrop_Value += value; }
         remove { model.OnCardDrop_Value -= value; }
     }
 
 
-    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column)
+    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column, bool isActiveHigherCard)
     {
-        model.ReturnLastMotion(cardInteractive, childrens, column);
+        model.ReturnLastMotion(cardInteractive, childrens, column, isActiveHigherCard);
     }
 
 

@@ -10,8 +10,24 @@ public class Column : MonoBehaviour
     public VerticalLayoutGroup VerticalLayoutGroup;
 
     [SerializeField] public Transform ContentScrollView;
+    [SerializeField] private Transform transformFirstPosition;
 
     public int YCardOffset = 10;
+
+    public Vector3 NewCardPosition
+    {
+        get
+        {
+            if(Cards.Count == 0)
+            {
+                return transformFirstPosition.position;
+            }
+            else
+            {
+                return Cards[^1].transform.position - new Vector3(0, 0.28f, 0);
+            }
+        }
+    }
 
     public bool CanBeDroped(CardInteractive card)
     {
@@ -113,7 +129,7 @@ public class Column : MonoBehaviour
 
                 for (int u = 0; u < doneCards.Count; u++)
                 {
-                    //doneCards[u].Pickable = false;
+                    doneCards[u].Pickable = false;
                     //doneCards[u].transform.position = new Vector3(-1, 0);
 
                     doneCards[u].gameObject.SetActive(false);
@@ -124,7 +140,8 @@ public class Column : MonoBehaviour
                 RemoveCards(doneCards);
                 RefreshPickable();
 
-                OnFullCompleteLevel?.Invoke();
+                OnFullComplectCards_Value?.Invoke(doneCards);
+                OnFullComplectCards?.Invoke();
             }
             value++;
         }
@@ -132,7 +149,8 @@ public class Column : MonoBehaviour
 
     #region Input
 
-    public event Action OnFullCompleteLevel;
+    public event Action OnFullComplectCards;
+    public event Action<List<CardInteractive>> OnFullComplectCards_Value;
 
     #endregion
 }

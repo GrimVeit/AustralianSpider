@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -89,6 +90,16 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         image.sprite = spriteCover;
     }
 
+    public void MoveTo(Vector3 vector, float speed, Action actionToEnd)
+    {
+        transform.DOMove(vector, speed).OnComplete(()=> actionToEnd?.Invoke());
+    }
+
+    public void MoveBack(float speed, Action actionToEnd)
+    {
+        transform.DOLocalMove(ParentColumn.NewCardPosition, speed).OnComplete(()=> actionToEnd?.Invoke());
+    }
+
     public void SetParentColumn(Column cardColumn)
     {
         ParentColumn = cardColumn;
@@ -161,13 +172,10 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         canvasGroup.blocksRaycasts = true;
 
-        transform.SetParent(ParentColumn.ContentScrollView);
-
         if (Children != null)
             for (int i = 0; i < Children.Count; i++)
             {
                 Children[i].canvasGroup.blocksRaycasts = true;
-                Children[i].transform.SetParent(Children[i].ParentColumn.ContentScrollView);
             }
 
         OnDroppedCard?.Invoke(eventData, this);

@@ -8,11 +8,11 @@ public class CardColumnModel
     public event Action OnWinning;
     public event Action OnFullCompleteCardGroup;
     public event Action OnCardDrop;
-    public event Action<CardInteractive, Column> OnCardDrop_Value;
+    public event Action<CardInteractive, Column, bool> OnCardDrop_Value;
 
     public event Action<List<CardInteractive>> OnDealCards;
     public event Action<List<CardInteractive>> OnDealCardsFromStock;
-    public event Action<CardInteractive, List<CardInteractive>, Column> OnReturnLastMotion;
+    public event Action<CardInteractive, List<CardInteractive>, Column, bool> OnReturnLastMotion;
 
     private int countFullCompleteGroup = 8;
 
@@ -45,13 +45,13 @@ public class CardColumnModel
         OnCardDrop?.Invoke();
     }
 
-    public void CardDrop(CardInteractive cardInteractive, Column column)
+    public void CardDrop(CardInteractive cardInteractive, Column column, bool isActiveHigherCard)
     {
-        OnCardDrop_Value?.Invoke(cardInteractive, column);
+        OnCardDrop_Value?.Invoke(cardInteractive, column, isActiveHigherCard);
     }
 
-    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column)
+    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column, bool isActiveHigherCard)
     {
-        OnReturnLastMotion?.Invoke(cardInteractive, childrens, column);
+        OnReturnLastMotion?.Invoke(cardInteractive, childrens, column, isActiveHigherCard);
     }
 }

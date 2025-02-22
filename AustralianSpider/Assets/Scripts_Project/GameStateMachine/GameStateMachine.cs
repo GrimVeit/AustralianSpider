@@ -16,13 +16,18 @@ public class GameStateMachine : IGlobalStateMachine
         StoreGameTypePresenter storeGameTypePresenter,
         StoreCardPresenter storeCardPresenter,
         GameDesignPresenter gameDesignPresenter,
-        CardColumnPresenter cardColumnPresenter)
+        CardColumnPresenter cardColumnPresenter,
+        UIMiniGameSceneRoot sceneRoot,
+        ScorePresenter scorePresenter,
+        MotionCounterPresenter motionCounterPresenter,
+        CardMotionHistoryPresenter cardMotionHistoryPresenter,
+        TimerPresenter timerPresenter)
     {
-        states[typeof(StartState_Game)] = new StartState_Game(this, storeGameDesignPresenter, storeCoverCardDesignPresenter, storeFaceCardDesignPresenter, storeGameTypePresenter, storeCardPresenter, gameDesignPresenter, cardColumnPresenter);
-        states[typeof(MainState_Game)] = new MainState_Game(this);
-        states[typeof(ExitState_Game)] = new ExitState_Game();
-        states[typeof(RestartState_Game)] = new RestartState_Game();
-        states[typeof(WinState_Game)] = new WinState_Game();
+        states[typeof(StartState_Game)] = new StartState_Game(this, storeGameDesignPresenter, storeCoverCardDesignPresenter, storeFaceCardDesignPresenter, storeGameTypePresenter, storeCardPresenter, gameDesignPresenter, cardColumnPresenter, timerPresenter);
+        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, cardColumnPresenter, storeCardPresenter, scorePresenter, motionCounterPresenter, cardMotionHistoryPresenter, timerPresenter);
+        states[typeof(ExitState_Game)] = new ExitState_Game(this, sceneRoot, timerPresenter);
+        states[typeof(RestartState_Game)] = new RestartState_Game(this, sceneRoot, timerPresenter);
+        states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot, timerPresenter);
     }
 
     public void Initialize()

@@ -59,6 +59,8 @@ public class UIMiniGameSceneRoot : MonoBehaviour
 
     public void CloseHeaderPanel()
     {
+        if(!headerPanel.IsActive) return;
+
         CloseOtherPanel(headerPanel);
     }
 
@@ -69,14 +71,14 @@ public class UIMiniGameSceneRoot : MonoBehaviour
 
     public void OpenRestartPanel()
     {
-        CloseHeaderPanel();
+        if(restartPanel.IsActive) return;
 
         OpenOtherPanel(restartPanel);
     }
 
     public void CloseRestartPanel()
     {
-        OpenHeaderPanel();
+        if(!restartPanel.IsActive) return;
 
         CloseOtherPanel(restartPanel);
     }
@@ -87,14 +89,14 @@ public class UIMiniGameSceneRoot : MonoBehaviour
 
     public void OpenExitPanel()
     {
-        CloseHeaderPanel();
+        if(exitPanel.IsActive) return;
 
         OpenOtherPanel(exitPanel);
     }
 
     public void CloseExitPanel()
     {
-        OpenHeaderPanel();
+        if (!exitPanel.IsActive) return;
 
         CloseOtherPanel(exitPanel);
     }

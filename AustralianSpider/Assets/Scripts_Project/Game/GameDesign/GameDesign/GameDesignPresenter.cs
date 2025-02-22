@@ -11,11 +11,13 @@ public class GameDesignPresenter
     {
         this.model = model;
         this.view = view;
+
+        ActivateEvents();
     }
 
     public void Initialize()
     {
-        ActivateEvents();
+
     }
 
     public void Dispose()

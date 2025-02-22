@@ -11,6 +11,7 @@ public class StartState_Game : IState
     private StoreCardPresenter storeCardPresenter;
     private GameDesignPresenter gameDesignPresenter;
     private CardColumnPresenter cardColumnPresenter;
+    private TimerPresenter timerPresenter;
 
     private IGlobalStateMachine stateMachine;
 
@@ -22,7 +23,8 @@ public class StartState_Game : IState
         StoreGameTypePresenter storeGameTypePresenter, 
         StoreCardPresenter storeCardPresenter, 
         GameDesignPresenter gameDesignPresenter,
-        CardColumnPresenter cardColumnPresenter)
+        CardColumnPresenter cardColumnPresenter,
+        TimerPresenter timerPresenter)
     {
         this.stateMachine = stateMachine;
         this.storeGameDesignPresenter = storeGameDesignPresenter;
@@ -32,29 +34,23 @@ public class StartState_Game : IState
         this.storeCardPresenter = storeCardPresenter;
         this.gameDesignPresenter = gameDesignPresenter;
         this.cardColumnPresenter = cardColumnPresenter;
+        this.timerPresenter = timerPresenter;
     }
 
     public void EnterState()
     {
-        storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
-        storeCoverCardDesignPresenter.OnSelectCoverCardDesign += storeCardPresenter.SetCoverCardDesign;
-        storeFaceCardDesignPresenter.OnSelectFaceCardDesign += storeCardPresenter.SetFaceCardDesign;
-        storeGameTypePresenter.OnSelectGameType += storeCardPresenter.SetGameType;
-        storeCardPresenter.OnDealCards_Value += cardColumnPresenter.DealCards;
+        Debug.Log("ACTIVATE STATE - START");
 
         storeCardPresenter.CreateCards();
         storeCardPresenter.DealCards();
+        timerPresenter.ActivateTimer();
 
         ChangeStateToMain();
     }
 
     public void ExitState()
     {
-        storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
-        storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= storeCardPresenter.SetCoverCardDesign;
-        storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= storeCardPresenter.SetFaceCardDesign;
-        storeGameTypePresenter.OnSelectGameType -= storeCardPresenter.SetGameType;
-        storeCardPresenter.OnDealCards_Value -= cardColumnPresenter.DealCards;
+        Debug.Log("DEACTIVATE STATE - START");
     }
 
     private void ChangeStateToMain()

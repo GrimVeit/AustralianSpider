@@ -43,9 +43,9 @@ public class GameEntryPoint
     {
         rootView.SetLoadScreen(0);
 
-        Screen.orientation = ScreenOrientation.Portrait;
-
         yield return rootView.ShowLoadingScreen();
+
+        Screen.orientation = ScreenOrientation.Portrait;
 
         yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.MAIN_MENU);
@@ -62,9 +62,9 @@ public class GameEntryPoint
     {
         rootView.SetLoadScreen(1);
 
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-
         yield return rootView.ShowLoadingScreen();
+
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
 
         yield return new WaitForSeconds(0.3f);
 

@@ -32,6 +32,8 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
     private ScorePresenter scorePresenter;
     private MotionCounterPresenter motionCounterPresenter;
 
+    private GameStateMachine stateMachine;
+
     public void Run(UIRootView uIRootView)
     {
         sceneRoot = sceneRootPrefab;
@@ -70,12 +72,27 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         scorePresenter = new ScorePresenter(new ScoreModel(bankPresenter, soundPresenter), viewContainer.GetView<ScoreView>());
         motionCounterPresenter = new MotionCounterPresenter(new MotionCounterModel(bankPresenter, soundPresenter), viewContainer.GetView<MotionCounterView>());
 
+        stateMachine = new GameStateMachine(
+            storeGameDesignPresenter,
+            storeCoverCardDesignPresenter,
+            storeFaceCardDesignPresenter,
+            storeGameTypePresenter,
+            storeCardPresenter,
+            gameDesignPresenter,
+            cardColumnPresenter,
+            sceneRoot,
+            scorePresenter,
+            motionCounterPresenter,
+            cardMotionHistoryPresenter,
+            timerPresenter);
+
         ActivateEvents();
 
         timerPresenter.Initialize();
         scorePresenter.Initialize();
         motionCounterPresenter.Initialize();
 
+        storeCardPresenter.Initialize();
         gameDesignPresenter.Initialize();
         storeGameDesignPresenter.Initialize();
 
@@ -84,24 +101,25 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         storeCoverCardDesignPresenter.Initialize();
         storeFaceCardDesignPresenter.Initialize();
         storeGameTypePresenter.Initialize();
-        storeCardPresenter.Initialize();
 
-        storeCardPresenter.CreateCards();
-        storeCardPresenter.DealCards();
-        timerPresenter.ActivateTimer();
+        stateMachine.Initialize();
+
+        //storeCardPresenter.CreateCards();
+        //storeCardPresenter.DealCards();
+        //timerPresenter.ActivateTimer();
     }
 
     private void ActivateEvents()
     {
         ActivateTransitionEvents();
 
-        //storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
+        storeGameDesignPresenter.OnSelectGameDesign += gameDesignPresenter.SetGameDesign;
 
-        //storeCoverCardDesignPresenter.OnSelectCoverCardDesign += storeCardPresenter.SetCoverCardDesign;
-        //storeFaceCardDesignPresenter.OnSelectFaceCardDesign += storeCardPresenter.SetFaceCardDesign;
-        //storeGameTypePresenter.OnSelectGameType += storeCardPresenter.SetGameType;
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign += storeCardPresenter.SetCoverCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign += storeCardPresenter.SetFaceCardDesign;
+        storeGameTypePresenter.OnSelectGameType += storeCardPresenter.SetGameType;
 
-        //storeCardPresenter.OnDealCards_Value += cardColumnPresenter.DealCards;
+        storeCardPresenter.OnDealCards_Value += cardColumnPresenter.DealCards;
         //storeCardPresenter.OnDealCardsFromStock_Value += cardColumnPresenter.DealCardsFromStock;
 
         //cardColumnPresenter.OnCardDrop += scorePresenter.RemoveScoreByCardDrop;
@@ -118,21 +136,21 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
     {
         DeactivateTransitionEvents();
 
-        //storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
+        storeGameDesignPresenter.OnSelectGameDesign -= gameDesignPresenter.SetGameDesign;
 
-        //storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= storeCardPresenter.SetCoverCardDesign;
-        //storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= storeCardPresenter.SetFaceCardDesign;
-        //storeGameTypePresenter.OnSelectGameType -= storeCardPresenter.SetGameType;
+        storeCoverCardDesignPresenter.OnSelectCoverCardDesign -= storeCardPresenter.SetCoverCardDesign;
+        storeFaceCardDesignPresenter.OnSelectFaceCardDesign -= storeCardPresenter.SetFaceCardDesign;
+        storeGameTypePresenter.OnSelectGameType -= storeCardPresenter.SetGameType;
 
-        //storeCardPresenter.OnDealCards_Value -= cardColumnPresenter.DealCards;
-        //storeCardPresenter.OnDealCardsFromStock_Value -= cardColumnPresenter.DealCardsFromStock;
+        storeCardPresenter.OnDealCards_Value -= cardColumnPresenter.DealCards;
+        storeCardPresenter.OnDealCardsFromStock_Value -= cardColumnPresenter.DealCardsFromStock;
 
-        //cardColumnPresenter.OnCardDrop -= scorePresenter.RemoveScoreByCardDrop;
-        //cardColumnPresenter.OnFullCompleteCardGroup -= scorePresenter.AddScoreByFullComplect;
-        //cardColumnPresenter.OnCardDrop -= motionCounterPresenter.AddMotion;
+        cardColumnPresenter.OnCardDrop -= scorePresenter.RemoveScoreByCardDrop;
+        cardColumnPresenter.OnFullCompleteCardGroup -= scorePresenter.AddScoreByFullComplect;
+        cardColumnPresenter.OnCardDrop -= motionCounterPresenter.AddMotion;
 
-        //cardColumnPresenter.OnCardDrop_Value -= cardMotionHistoryPresenter.AddMotion;
-        //cardMotionHistoryPresenter.OnRemoveLastMotion -= cardColumnPresenter.ReturnLastMotion;
+        cardColumnPresenter.OnCardDrop_Value -= cardMotionHistoryPresenter.AddMotion;
+        cardMotionHistoryPresenter.OnRemoveLastMotion -= cardColumnPresenter.ReturnLastMotion;
     }
 
     private void ActivateTransitionEvents()
@@ -169,6 +187,8 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         storeFaceCardDesignPresenter?.Dispose();
         storeGameTypePresenter?.Dispose();
         storeCardPresenter?.Dispose();
+
+        stateMachine?.Dispose();
     }
 
     private void OnDestroy()

@@ -12,12 +12,20 @@ public class CardColumnView : View
 
     public void Initialize()
     {
-        columns.ForEach(column => column.OnFullCompleteLevel += HandleFullCompleteLevelGroup);
+        columns.ForEach(column =>
+        {
+            column.OnFullComplectCards += HandleFullCompleteLevelGroup;
+            column.OnFullComplectCards_Value += HandleFullCompleteLevelGroup;
+        });
     }
 
     public void Dispose()
     {
-        columns.ForEach(column => column.OnFullCompleteLevel -= HandleFullCompleteLevelGroup);
+        columns.ForEach(column =>
+        {
+            column.OnFullComplectCards -= HandleFullCompleteLevelGroup;
+            column.OnFullComplectCards_Value -= HandleFullCompleteLevelGroup;
+        });
     }
 
     public void DealCards(List<CardInteractive> cards)
@@ -63,6 +71,7 @@ public class CardColumnView : View
             cards[i].Pickable = true;
             columns[i].AddCard(cards[i]);
             columns[i].RefreshPickable();
+            columns[i].CheckFinishedSequence();
         }
     }
 
@@ -76,7 +85,7 @@ public class CardColumnView : View
         currentCardInteractive.transform.SetParent(transformParent);
     }
 
-    public void SortDropedCard(PointerEventData pointerEventData, CardInteractive card)
+    public void SortDropedCard(PointerEventData pointerEventData, CardInteractive cardInteractive)
     {
         if (pointerEventData.pointerEnter != null)
         {
@@ -84,74 +93,133 @@ public class CardColumnView : View
 
             if (pointerEventData.pointerEnter.TryGetComponent(out Column cardColumn))
             {
-                if (cardColumn.CanBeDroped(card))
+                if (cardColumn.CanBeDroped(cardInteractive))
                 {
+                    var element = cardInteractive.ParentColumn.Cards.IndexOf(cardInteractive) - 1;
+                    if(element != -1)
+                    {
+                        OnCardDrop_Value?.Invoke(cardInteractive, cardInteractive.ParentColumn, cardInteractive.ParentColumn.Cards[element].Fliped);
+                    }
+                    else
+                    {
+                        OnCardDrop_Value?.Invoke(cardInteractive, cardInteractive.ParentColumn, false);
+                    }
 
-                    OnCardDrop_Value?.Invoke(card, card.ParentColumn);
+                    if (cardInteractive.Children != null)
+                        cardInteractive.ParentColumn.RemoveCards(cardInteractive.Children);
+                    cardInteractive.ParentColumn.RemoveCard(cardInteractive);
+                    cardInteractive.ParentColumn.RefreshPickable();
 
-                    if (card.Children != null)
-                        card.ParentColumn.RemoveCards(card.Children);
-                    card.ParentColumn.RemoveCard(card);
-                    card.ParentColumn.RefreshPickable();
+                    cardInteractive.SetParentColumn(cardColumn);
 
-                    cardColumn.AddCard(card);
-
-                    if (card.Children != null)
-                        cardColumn.AddCards(card.Children);
-
-                    cardColumn.RefreshPickable();
-                    cardColumn.CheckFinishedSequence();
-
-                    OnCardDrop?.Invoke();
+                    cardInteractive.MoveTo(cardColumn.NewCardPosition, 0.1f, ()=> Test(cardInteractive, cardColumn));
 
                 }
                 else
                 {
-                    card.ReturnToOriginalPosition();
+                    cardInteractive.ReturnToOriginalPosition();
                 }
             }
             else
             {
-                card.ReturnToOriginalPosition();
+                cardInteractive.ReturnToOriginalPosition();
             }
         }
         else
         {
-            card.ReturnToOriginalPosition();
+            cardInteractive.ReturnToOriginalPosition();
         }
     }
 
-    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column)
+    private void Test(CardInteractive card, Column cardColumn)
+    {
+        card.ParentColumn.RefreshPickable();
+
+        cardColumn.AddCard(card);
+
+        if (card.Children != null)
+            cardColumn.AddCards(card.Children);
+
+        cardColumn.RefreshPickable();
+        cardColumn.CheckFinishedSequence();
+
+        OnCardDrop?.Invoke();
+    }
+
+    public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column, bool isActiveHigherCard)
     {
         cardInteractive.CleanChildrens();
         cardInteractive.SetChildrens(childrens);
 
+        //if (cardInteractive.Children != null)
+        //    cardInteractive.ParentColumn.RemoveCards(cardInteractive.Children);
+
+        //cardInteractive.ParentColumn.RemoveCard(cardInteractive);
+        //cardInteractive.ParentColumn.RefreshPickable();
+
+        //column.AddCard(cardInteractive);
+
+        //if (cardInteractive.Children != null)
+        //    column.AddCards(cardInteractive.Children);
+
+        //column.RefreshPickable();
+        //column.CheckFinishedSequence();
+
         if (cardInteractive.Children != null)
             cardInteractive.ParentColumn.RemoveCards(cardInteractive.Children);
-
         cardInteractive.ParentColumn.RemoveCard(cardInteractive);
-        cardInteractive.ParentColumn.RefreshPickable();
+       cardInteractive.ParentColumn.RefreshPickable();
 
-        column.AddCard(cardInteractive);
+        cardInteractive.SetParentColumn(column);
 
-        if (cardInteractive.Children != null)
-            column.AddCards(cardInteractive.Children);
+        cardInteractive.MoveTo(column.NewCardPosition, 0.1f, () => ReturnEndMove(cardInteractive, column, isActiveHigherCard));
 
-        column.RefreshPickable();
-        column.CheckFinishedSequence();
+        OnCardDrop?.Invoke();
+    }
+
+    private void ReturnEndMove(CardInteractive card, Column cardColumn, bool isActiveHigherCard)
+    {
+        card.ParentColumn.RefreshPickable();
+
+        var element = cardColumn.Cards[cardColumn.Cards.Count - 1];
+        if (element != null)
+        {
+            if (isActiveHigherCard)
+            {
+                cardColumn.Cards[cardColumn.Cards.Count - 1].Fliped = true;
+            }
+            else
+            {
+                cardColumn.Cards[cardColumn.Cards.Count - 1].Fliped = false;
+            }
+        }
+
+        cardColumn.AddCard(card);
+
+        if (card.Children != null)
+            cardColumn.AddCards(card.Children);
+
+        cardColumn.RefreshPickable();
+        cardColumn.CheckFinishedSequence();
 
         OnCardDrop?.Invoke();
     }
 
     #region Input
 
-    public event Action OnFullCompleteLevelGroup;
+    public event Action OnFullComplectCards;
+    public event Action<List<CardInteractive>> OnFullComplectCards_Value;
     public event Action OnCardDrop;
-    public event Action<CardInteractive, Column> OnCardDrop_Value;
+    public event Action<CardInteractive, Column, bool> OnCardDrop_Value;
 
     private void HandleFullCompleteLevelGroup()
     {
-        OnFullCompleteLevelGroup?.Invoke();
+        OnFullComplectCards?.Invoke();
+    }
+
+    private void HandleFullCompleteLevelGroup(List<CardInteractive> cardInteractives)
+    {
+        OnFullComplectCards_Value?.Invoke(cardInteractives);
     }
 
     #endregion
