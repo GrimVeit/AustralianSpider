@@ -22,12 +22,8 @@ public class CardMotionHistoryModel
 
     public void ReturmLastMotion()
     {
-        Debug.Log("уси");
-
         if(cardMotionHistories.Count > 0)
         {
-            Debug.Log("уси 2");
-
             var motion = cardMotionHistories[^1];
 
             OnRemoveLastMotion?.Invoke(motion.cardInteractive, motion.cardChildrens, motion.column, motion.isActiveHigherCard);

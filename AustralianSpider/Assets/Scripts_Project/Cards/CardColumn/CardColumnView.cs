@@ -104,8 +104,6 @@ public class CardColumnView : View
         cardColumn.AddCard(card);
         cardColumn.RefreshPickable();
         cardColumn.CheckFinishedSequence();
-
-        OnCardDrop?.Invoke();
     }
 
     public void PickedCard(CardInteractive cardInteractive)

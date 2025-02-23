@@ -41,9 +41,9 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             fliped = value;
 
             if (value)
-                image.sprite = Sprite;
+                ActivateFlip();
             else
-                image.sprite = CarbackSprite;
+                DeactivateFlip();
         }
     }
 
@@ -62,6 +62,8 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private bool fliped;
     private bool pickable = false;
     private bool picked;
+
+    private Sequence sequenceFlip;
 
     private Image spriteRenderer;
     private RectTransform rectTransform => transform.GetComponent<RectTransform>();
@@ -190,6 +192,35 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         rectTransform.anchoredPosition += eventData.delta;
     }
+
+
+    #region Design
+
+    public void ActivateFlip()
+    {
+        sequenceFlip?.Kill();
+
+        Debug.Log("ON");
+
+        sequenceFlip = DOTween.Sequence();
+        sequenceFlip.Append(transform.DORotate(new Vector3(0, 90, 0), 0.1f).OnComplete(() => image.sprite = Sprite))
+            .Append(transform.DORotate(Vector3.zero, 0.1f));  
+        sequenceFlip.Play();
+    }
+
+    public void DeactivateFlip()
+    {
+        sequenceFlip?.Kill();
+
+        Debug.Log("OFF");
+
+        sequenceFlip = DOTween.Sequence();
+        sequenceFlip.Append(transform.DORotate(new Vector3(0, 90, 0), 0.1f).OnComplete(() => image.sprite = CarbackSprite))
+            .Append(transform.DORotate(Vector3.zero, 0.1f));
+        sequenceFlip.Play();
+    }
+
+    #endregion
 
 
 
