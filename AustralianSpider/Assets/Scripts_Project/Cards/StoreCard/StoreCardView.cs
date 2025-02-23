@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class StoreCardView : View
 {
+    public int sendCardCount;
     public event Action<List<CardInteractive>> OnDealCards_Value;
     public event Action<List<CardInteractive>> OnDealCardsFromStock_Value;
     public event Action OnDealCardsFromStock;
@@ -14,14 +15,15 @@ public class StoreCardView : View
     [SerializeField] private Button buttonTest;
     [SerializeField] private CardInteractive cardMovePrefab;
     [SerializeField] private Transform transformCardParent;
+    [SerializeField] private List<Transform> transformCardsGroup;
 
     private GameType currentGameType;
     private CoverCardDesign currentCoverCardDesign;
     private FaceCardDesign currentFaceCardDesign;
 
-    [SerializeField] private List<CardInteractive> allCardInteractives = new List<CardInteractive>();
+    private List<CardInteractive> allCardInteractives = new List<CardInteractive>();
 
-    public int sendCardCount;
+    private List<List<CardInteractive>> cardGroupCards = new List<List<CardInteractive>>();
 
     public void Initialize()
     {
@@ -56,25 +58,50 @@ public class StoreCardView : View
         }
 
         ShuffleCards(allCardInteractives);
+
+        int[] sizes = { 10, 10, 10, 10, 10, 54 };
+        int index = 0;
+
+        for (int i = 0; i < sizes.Length; i++)
+        {
+            List<CardInteractive> sublist = new List<CardInteractive>();
+
+            for (int j = 0; j < sizes[i]; j++)
+            {
+                sublist.Add(allCardInteractives[index]);
+                index += 1;
+            }
+
+            MoveCardToTransform(sublist, transformCardsGroup[i]);
+
+            cardGroupCards.Add(sublist);
+        }
     }
 
     public void DealCards()
     {
-        OnDealCards_Value?.Invoke(allCardInteractives.GetRange(0, 54));
-        sendCardCount = 54;
+        OnDealCards_Value?.Invoke(cardGroupCards[^1]);
+        cardGroupCards.RemoveAt(cardGroupCards.Count - 1);
     }
 
     public void DealCardsFromStock()
     {
-        int startIndex = sendCardCount;
+        if(cardGroupCards.Count == 0) return;
 
-        if(startIndex < allCardInteractives.Count)
+        OnDealCardsFromStock_Value?.Invoke(cardGroupCards[^1]);
+        OnDealCardsFromStock?.Invoke();
+
+        cardGroupCards.RemoveAt(cardGroupCards.Count - 1);
+    }
+
+    private void MoveCardToTransform(List<CardInteractive> cardInteractives, Transform transformPos)
+    {
+        for (int i = 0; i < cardInteractives.Count; i++)
         {
-            int batchSize = Math.Min(10, allCardInteractives.Count - startIndex);
-            OnDealCardsFromStock_Value?.Invoke(allCardInteractives.GetRange(startIndex, batchSize));
-            OnDealCardsFromStock?.Invoke();
+            Debug.Log(transformPos.name);
 
-            sendCardCount += batchSize;
+            cardInteractives[i].transform.SetParent(transformPos);
+            cardInteractives[i].transform.localPosition = Vector3.zero;
         }
     }
 

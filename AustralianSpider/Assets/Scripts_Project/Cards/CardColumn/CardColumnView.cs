@@ -30,6 +30,11 @@ public class CardColumnView : View
 
     public void DealCards(List<CardInteractive> cards)
     {
+        Coroutines.Start(DealCards_Coro(cards));
+    }
+
+    public IEnumerator DealCards_Coro(List<CardInteractive> cards)
+    {
         var indexCard = 0;
 
         for (int i = 0; i < 10; i++)
@@ -42,37 +47,65 @@ public class CardColumnView : View
 
             for (int j = 0; j < unFlipedCards; j++)
             {
-                cards[indexCard].OnPickedCard += PickedCard;
-                cards[indexCard].OnDroppedCard += SortDropedCard;
-                columns[i].AddCard(cards[indexCard]);
+                var card = cards[indexCard];
+                card.OnPickedCard += PickedCard;
+                card.OnDroppedCard += SortDropedCard;
+
+                card.SetParentColumn(columns[i]);
+                card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn));
+
                 indexCard += 1;
+
+                yield return new WaitForSeconds(0.02f);
             }
         }
 
         for (int i = 0; i < 10; i++)
         {
-            cards[indexCard].OnPickedCard += PickedCard;
-            cards[indexCard].OnDroppedCard += SortDropedCard;
-            cards[indexCard].Fliped = true;
-            cards[indexCard].Pickable = true;
-            columns[i].AddCard(cards[indexCard]);
-            columns[i].RefreshPickable();
+            var card = cards[indexCard];
+            card.OnPickedCard += PickedCard;
+            card.OnDroppedCard += SortDropedCard;
+            card.Fliped = true;
+            card.Pickable = true;
+
+            card.SetParentColumn(columns[i]);
+            card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn));
+
             indexCard += 1;
+
+            yield return new WaitForSeconds(0.02f);
         }
     }
 
     public void DealCardsFromStock(List<CardInteractive> cards)
     {
+        Coroutines.Start(DealCardsFromStock_Coro(cards));
+    }
+
+    private IEnumerator DealCardsFromStock_Coro(List<CardInteractive> cards)
+    {
         for (int i = 0; i < 10; i++)
         {
-            cards[i].OnPickedCard += PickedCard;
-            cards[i].OnDroppedCard += SortDropedCard;
-            cards[i].Fliped = true;
-            cards[i].Pickable = true;
-            columns[i].AddCard(cards[i]);
-            columns[i].RefreshPickable();
-            columns[i].CheckFinishedSequence();
+            var card = cards[i];
+            card.OnPickedCard += PickedCard;
+            card.OnDroppedCard += SortDropedCard;
+            card.Fliped = true;
+            card.Pickable = true;
+
+            card.SetParentColumn(columns[i]);
+            card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn));
+
+            yield return new WaitForSeconds(0.02f);
         }
+    }
+
+    private void EndDealCardsFromStock(CardInteractive card, Column cardColumn)
+    {
+        cardColumn.AddCard(card);
+        cardColumn.RefreshPickable();
+        cardColumn.CheckFinishedSequence();
+
+        OnCardDrop?.Invoke();
     }
 
     public void PickedCard(CardInteractive cardInteractive)
