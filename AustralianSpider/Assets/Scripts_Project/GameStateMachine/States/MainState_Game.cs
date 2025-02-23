@@ -39,6 +39,7 @@ public class MainState_Game : IState
         cardMotionHistoryPresenter.OnRemoveLastMotion += cardColumnPresenter.ReturnLastMotion;
         cardColumnPresenter.OnFullCompleteCardGroup += cardMotionHistoryPresenter.CleanHistory;
         storeCardPresenter.OnDealCardsFromStock += cardMotionHistoryPresenter.CleanHistory;
+        cardColumnPresenter.OnFullCompleteCardGroup_Value += storeCardPresenter.DestroyCards;
 
         sceneRoot.OnClickToRestart_Header += ChangeStateToRestart;
         sceneRoot.OnClickToExit_Header += ChangeStateToExit;
@@ -62,6 +63,7 @@ public class MainState_Game : IState
         cardMotionHistoryPresenter.OnRemoveLastMotion -= cardColumnPresenter.ReturnLastMotion;
         cardColumnPresenter.OnFullCompleteCardGroup -= cardMotionHistoryPresenter.CleanHistory;
         storeCardPresenter.OnDealCardsFromStock -= cardMotionHistoryPresenter.CleanHistory;
+        cardColumnPresenter.OnFullCompleteCardGroup_Value -= storeCardPresenter.DestroyCards;
 
         sceneRoot.OnClickToRestart_Header -= ChangeStateToRestart;
         sceneRoot.OnClickToExit_Header -= ChangeStateToExit;

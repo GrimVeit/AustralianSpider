@@ -40,12 +40,18 @@ public class StoreCardModel
         OnDealCards?.Invoke();
     }
 
+    internal void DestroyCards(List<CardInteractive> cards)
+    {
+        OnDestroyCards?.Invoke(cards);
+    }
+
     #region Input
 
     public event Action<GameType> OnSetGameType;
     public event Action<CoverCardDesign> OnSetCoverCardDesign;
     public event Action<FaceCardDesign> OnSetFaceCardDesign;
 
+    public event Action<List<CardInteractive>> OnDestroyCards;
     public event Action OnCreateCards;
     public event Action OnDealCards;
 

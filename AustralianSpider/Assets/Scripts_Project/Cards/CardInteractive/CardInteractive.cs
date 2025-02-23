@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
@@ -95,6 +97,11 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void MoveTo(Vector3 vector, float speed, Action actionToEnd)
     {
         transform.DOMove(vector, speed).OnComplete(()=> actionToEnd?.Invoke());
+    }
+
+    public void RotateTo(Vector3 vector, float speed, Action actionToEnd)
+    {
+        transform.DORotate(vector, speed).OnComplete(() => actionToEnd?.Invoke());
     }
 
     public void MoveBack(float speed, Action actionToEnd)

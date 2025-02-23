@@ -33,6 +33,7 @@ public class CardColumnPresenter
         model.OnReturnLastMotion += view.ReturnLastMotion;
 
         view.OnFullComplectCards += model.FullCompleteCardGroup;
+        view.OnFullComplectCards_Value += model.FullCompleteCardGroup;
         view.OnCardDrop += model.CardDrop;
         view.OnCardDrop_Value += model.CardDrop;
     }
@@ -44,6 +45,7 @@ public class CardColumnPresenter
         model.OnReturnLastMotion -= view.ReturnLastMotion;
 
         view.OnFullComplectCards -= model.FullCompleteCardGroup;
+        view.OnFullComplectCards_Value -= model.FullCompleteCardGroup;
         view.OnCardDrop -= model.CardDrop;
         view.OnCardDrop_Value -= model.CardDrop;
     }
@@ -54,6 +56,12 @@ public class CardColumnPresenter
     {
         add { model.OnFullCompleteCardGroup += value; }
         remove { model.OnFullCompleteCardGroup -= value; }
+    }
+
+    public event Action<List<CardInteractive>> OnFullCompleteCardGroup_Value
+    {
+        add { model.OnFullCompleteCardGroup_Value += value; }
+        remove { model.OnFullCompleteCardGroup_Value -= value; }
     }
 
     public event Action OnWinning

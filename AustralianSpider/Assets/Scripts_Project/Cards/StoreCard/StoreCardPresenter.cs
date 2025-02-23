@@ -35,6 +35,7 @@ public class StoreCardPresenter
         model.OnSetGameType += view.SetGameType;
         model.OnCreateCards += view.GenerateCards;
         model.OnDealCards += view.DealCards;
+        model.OnDestroyCards += view.DestroyCards;
     }
 
     private void DeactivateEvents()
@@ -44,6 +45,7 @@ public class StoreCardPresenter
         model.OnSetGameType -= view.SetGameType;
         model.OnCreateCards -= view.GenerateCards;
         model.OnDealCards -= view.DealCards;
+        model.OnDestroyCards -= view.DestroyCards;
     }
 
     #region Input
@@ -79,6 +81,11 @@ public class StoreCardPresenter
     public void SetGameType(GameType gameType)
     {
         model.SetGameType(gameType);
+    }
+
+    public void DestroyCards(List<CardInteractive> cards)
+    {
+        model.DestroyCards(cards);
     }
 
     public void CreateCards()

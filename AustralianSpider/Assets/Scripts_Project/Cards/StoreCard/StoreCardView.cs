@@ -16,6 +16,7 @@ public class StoreCardView : View
     [SerializeField] private CardInteractive cardMovePrefab;
     [SerializeField] private Transform transformCardParent;
     [SerializeField] private List<Transform> transformCardsGroup;
+    [SerializeField] private Transform transformDestroy;
 
     private GameType currentGameType;
     private CoverCardDesign currentCoverCardDesign;
@@ -92,6 +93,23 @@ public class StoreCardView : View
         OnDealCardsFromStock?.Invoke();
 
         cardGroupCards.RemoveAt(cardGroupCards.Count - 1);
+    }
+
+    public void DestroyCards(List<CardInteractive> cards)
+    {
+        Coroutines.Start(DestroyCards_Coro(cards));
+    }
+
+    private IEnumerator DestroyCards_Coro(List<CardInteractive> cards)
+    {
+        for (int i = cards.Count - 1; i >= 0; i--)
+        {
+            cards[i].transform.SetParent(transformDestroy);
+            cards[i].MoveTo(transformDestroy.position, 0.2f, null);
+            cards[i].RotateTo(new Vector3(0, 0, -90), 0.3f, null);
+
+            yield return new WaitForSeconds(0.03f);
+        }
     }
 
     private void MoveCardToTransform(List<CardInteractive> cardInteractives, Transform transformPos)

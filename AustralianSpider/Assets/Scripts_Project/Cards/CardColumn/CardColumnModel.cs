@@ -7,6 +7,7 @@ public class CardColumnModel
 {
     public event Action OnWinning;
     public event Action OnFullCompleteCardGroup;
+    public event Action<List<CardInteractive>> OnFullCompleteCardGroup_Value;
     public event Action OnCardDrop;
     public event Action<CardInteractive, Column, bool> OnCardDrop_Value;
 
@@ -38,6 +39,11 @@ public class CardColumnModel
         {
             OnWinning?.Invoke();
         }
+    }
+
+    public void FullCompleteCardGroup(List<CardInteractive> cardInteractives)
+    {
+        OnFullCompleteCardGroup_Value?.Invoke(cardInteractives);
     }
 
     public void CardDrop()

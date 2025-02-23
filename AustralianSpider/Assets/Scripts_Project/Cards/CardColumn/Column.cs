@@ -129,10 +129,10 @@ public class Column : MonoBehaviour
 
                 for (int u = 0; u < doneCards.Count; u++)
                 {
-                    doneCards[u].Pickable = false;
+                    //doneCards[u].Pickable = false;
                     //doneCards[u].transform.position = new Vector3(-1, 0);
 
-                    doneCards[u].gameObject.SetActive(false);
+                    //doneCards[u].gameObject.SetActive(false);
                 }
 
                 Debug.Log("WOW");
