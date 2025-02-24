@@ -36,6 +36,9 @@ public class MainMenuEntryPoint : MonoBehaviour
     private StoreGameTypePresenter storeGameTypePresenter;
     private SelectGameTypePresenter selectGameTypePresenter;
 
+    private StoreDailyTaskPresenter storeDailyTaskPresenter;
+    private SelectDailyTaskPresenter selectDailyTaskPresenter;
+
     public void Run(UIRootView uIRootView)
     {
         sceneRoot = menuRootPrefab;
@@ -73,6 +76,9 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeGameTypePresenter = new StoreGameTypePresenter(new StoreGameTypeModel(gameTypeGroup));
         selectGameTypePresenter = new SelectGameTypePresenter(new SelectGameTypeModel(), viewContainer.GetView<SelectGameTypeView>());
 
+        storeDailyTaskPresenter = new StoreDailyTaskPresenter(new StoreDailyTaskModel());
+        selectDailyTaskPresenter = new SelectDailyTaskPresenter(new SelectDailyTaskModel(), viewContainer.GetView<SelectDailyTaskView>());
+
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
 
@@ -82,6 +88,8 @@ public class MainMenuEntryPoint : MonoBehaviour
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
+
+        selectDailyTaskPresenter.Initialize();
 
         selectGameTypePresenter.Initialize();
 
@@ -97,7 +105,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         faceCardDesignVisualizePresenter.Initialize();
         selectFaceCardDesignPresenter.Initialize();
 
-
+        storeDailyTaskPresenter.Initalize();
         storeGameTypePresenter.Initialize();
         storeGameDesignPresenter.Initialize();
         storeCoverCardDesignPresenter.Initialize();
@@ -158,6 +166,15 @@ public class MainMenuEntryPoint : MonoBehaviour
         selectGameTypePresenter.OnChooseGameType += storeGameTypePresenter.SelectGameType;
         storeGameTypePresenter.OnSelectGameType += selectGameTypePresenter.SelectGameType;
         storeGameTypePresenter.OnDeselectGameType += selectGameTypePresenter.DeselectGameType;
+
+
+
+
+        selectDailyTaskPresenter.OnChooseDailyTask += storeDailyTaskPresenter.SelectDailyTask;
+        storeDailyTaskPresenter.OnGetDayOfWeekFirstDayMonth += selectDailyTaskPresenter.SetDayOfWeakFirstDayMonth;
+        storeDailyTaskPresenter.OnChangeStatusDailyTask += selectDailyTaskPresenter.SetDailyTaskData;
+        storeDailyTaskPresenter.OnSelectDailyTask += selectDailyTaskPresenter.SelectDailyTask;
+        storeDailyTaskPresenter.OnDeselectDailyTask += selectDailyTaskPresenter.DeselectDailyTask;
     }
 
     private void DeactivateEvents()
@@ -206,6 +223,13 @@ public class MainMenuEntryPoint : MonoBehaviour
         selectGameTypePresenter.OnChooseGameType -= storeGameTypePresenter.SelectGameType;
         storeGameTypePresenter.OnSelectGameType -= selectGameTypePresenter.SelectGameType;
         storeGameTypePresenter.OnDeselectGameType -= selectGameTypePresenter.DeselectGameType;
+
+
+        selectDailyTaskPresenter.OnChooseDailyTask -= storeDailyTaskPresenter.SelectDailyTask;
+        storeDailyTaskPresenter.OnGetDayOfWeekFirstDayMonth -= selectDailyTaskPresenter.SetDayOfWeakFirstDayMonth;
+        storeDailyTaskPresenter.OnChangeStatusDailyTask -= selectDailyTaskPresenter.SetDailyTaskData;
+        storeDailyTaskPresenter.OnSelectDailyTask -= selectDailyTaskPresenter.SelectDailyTask;
+        storeDailyTaskPresenter.OnDeselectDailyTask -= selectDailyTaskPresenter.DeselectDailyTask;
     }
 
     private void ActivateTransitionsSceneEvents()
@@ -234,6 +258,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         bankPresenter?.Dispose();
 
 
+        selectDailyTaskPresenter?.Dispose();
 
         selectGameTypePresenter?.Dispose();
 
@@ -250,7 +275,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         selectFaceCardDesignPresenter?.Dispose();
 
 
-
+        storeDailyTaskPresenter?.Dispose();
         storeGameTypePresenter?.Dispose();
         storeGameDesignPresenter?.Dispose();
         storeCoverCardDesignPresenter?.Dispose();
