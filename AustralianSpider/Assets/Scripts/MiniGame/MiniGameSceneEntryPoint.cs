@@ -31,6 +31,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
     private TimerPresenter timerPresenter;
     private ScorePresenter scorePresenter;
     private MotionCounterPresenter motionCounterPresenter;
+    private MotionHintPresenter motionHintPresenter;
 
     private GameStateMachine stateMachine;
 
@@ -71,6 +72,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         timerPresenter = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_MinutesSeconds>());
         scorePresenter = new ScorePresenter(new ScoreModel(bankPresenter, soundPresenter), viewContainer.GetView<ScoreView>());
         motionCounterPresenter = new MotionCounterPresenter(new MotionCounterModel(bankPresenter, soundPresenter), viewContainer.GetView<MotionCounterView>());
+        motionHintPresenter = new MotionHintPresenter(new MotionHintModel(), viewContainer.GetView<MotionHintView>());
 
         stateMachine = new GameStateMachine(
             storeGameDesignPresenter,
@@ -84,13 +86,15 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
             scorePresenter,
             motionCounterPresenter,
             cardMotionHistoryPresenter,
-            timerPresenter);
+            timerPresenter,
+            motionHintPresenter);
 
         ActivateEvents();
 
         timerPresenter.Initialize();
         scorePresenter.Initialize();
         motionCounterPresenter.Initialize();
+        motionHintPresenter.Initialize();
 
         storeCardPresenter.Initialize();
         gameDesignPresenter.Initialize();
@@ -177,6 +181,7 @@ public class MiniGameSceneEntryPoint : MonoBehaviour
         scorePresenter?.Dispose();
         motionCounterPresenter?.Dispose();
         cardMotionHistoryPresenter?.Dispose();
+        motionHintPresenter?.Dispose();
 
         gameDesignPresenter?.Dispose();
         storeGameDesignPresenter?.Dispose();

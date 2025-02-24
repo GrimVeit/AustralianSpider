@@ -1,14 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 public class CardColumnView : View
 {
     [SerializeField] private List<Column> columns = new List<Column>();
     [SerializeField] private Transform transformParent;
     private CardInteractive currentCardInteractive;
+
+    public List<CardInteractive> pickableCards = new List<CardInteractive>();
+    public List<CardInteractive> possibleHints = new List<CardInteractive>();
 
     public void Initialize()
     {
@@ -31,6 +36,33 @@ public class CardColumnView : View
     public void DealCards(List<CardInteractive> cards)
     {
         Coroutines.Start(DealCards_Coro(cards));
+    }
+
+
+    public void HuntMotion()
+    {
+        pickableCards.Clear();
+        possibleHints.Clear();
+
+        pickableCards = columns
+            .SelectMany(column => column.Cards)
+            .Where(card => card.Pickable)
+            .ToList();
+
+        foreach(var card in pickableCards)
+        {
+            foreach(var targetColumn in columns)
+            {
+                if (targetColumn.CanBeDroped(card))
+                {
+                    possibleHints.Add(card);
+                }
+            }
+        }
+
+        if(possibleHints.Count == 0) return;
+
+        possibleHints[Random.Range(0, possibleHints.Count)].SelectCard();
     }
 
     public IEnumerator DealCards_Coro(List<CardInteractive> cards)

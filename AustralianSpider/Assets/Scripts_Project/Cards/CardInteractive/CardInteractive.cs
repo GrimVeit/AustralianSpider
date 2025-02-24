@@ -61,11 +61,14 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     //Questionable
     public Column ParentColumn;
 
+    [SerializeField] private Image imageBorder;
+
     private bool fliped;
     private bool pickable = false;
     private bool picked;
 
     private Sequence sequenceFlip;
+    private Sequence sequenceSelect;
 
     private Image spriteRenderer;
     private RectTransform rectTransform => transform.GetComponent<RectTransform>();
@@ -212,7 +215,6 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         sequenceFlip = DOTween.Sequence();
         sequenceFlip.Append(transform.DORotate(new Vector3(0, 90, 0), 0.1f).OnComplete(() => image.sprite = Sprite))
             .Append(transform.DORotate(Vector3.zero, 0.1f));  
-        sequenceFlip.Play();
     }
 
     public void DeactivateFlip()
@@ -224,7 +226,19 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         sequenceFlip = DOTween.Sequence();
         sequenceFlip.Append(transform.DORotate(new Vector3(0, 90, 0), 0.1f).OnComplete(() => image.sprite = CarbackSprite))
             .Append(transform.DORotate(Vector3.zero, 0.1f));
-        sequenceFlip.Play();
+    }
+
+    public void SelectCard()
+    {
+        sequenceSelect?.Kill();
+
+        sequenceSelect = DOTween.Sequence();
+
+        sequenceSelect.Append(transform.DOScale(1.1f, 0.3f));
+        sequenceSelect.Join(imageBorder.DOFade(1f, 0.3f));
+
+        sequenceSelect.Append(transform.DOScale(1f, 0.3f));
+        sequenceSelect.Join(imageBorder.DOFade(0f, 0.3f));
     }
 
     #endregion

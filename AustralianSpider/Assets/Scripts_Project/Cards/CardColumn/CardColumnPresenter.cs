@@ -31,6 +31,7 @@ public class CardColumnPresenter
         model.OnDealCards += view.DealCards;
         model.OnDealCardsFromStock += view.DealCardsFromStock;
         model.OnReturnLastMotion += view.ReturnLastMotion;
+        model.OnMotionHint += view.HuntMotion;
 
         view.OnFullComplectCards += model.FullCompleteCardGroup;
         view.OnFullComplectCards_Value += model.FullCompleteCardGroup;
@@ -43,6 +44,7 @@ public class CardColumnPresenter
         model.OnDealCards -= view.DealCards;
         model.OnDealCardsFromStock -= view.DealCardsFromStock;
         model.OnReturnLastMotion -= view.ReturnLastMotion;
+        model.OnMotionHint -= view.HuntMotion;
 
         view.OnFullComplectCards -= model.FullCompleteCardGroup;
         view.OnFullComplectCards_Value -= model.FullCompleteCardGroup;
@@ -88,7 +90,6 @@ public class CardColumnPresenter
         model.ReturnLastMotion(cardInteractive, childrens, column, isActiveHigherCard);
     }
 
-
     public void DealCards(List<CardInteractive> cardInteractives)
     {
         model.DealCards(cardInteractives);
@@ -97,6 +98,11 @@ public class CardColumnPresenter
     public void DealCardsFromStock(List<CardInteractive> cardInteractives)
     {
         model.DealCardsFromStock(cardInteractives);
+    }
+
+    public void MotionHint()
+    {
+        model.MotionHint();
     }
 
     #endregion

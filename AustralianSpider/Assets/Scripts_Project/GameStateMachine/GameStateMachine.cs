@@ -19,10 +19,11 @@ public class GameStateMachine : IGlobalStateMachine
         ScorePresenter scorePresenter,
         MotionCounterPresenter motionCounterPresenter,
         CardMotionHistoryPresenter cardMotionHistoryPresenter,
-        TimerPresenter timerPresenter)
+        TimerPresenter timerPresenter,
+        MotionHintPresenter motionHintPresenter)
     {
         states[typeof(StartState_Game)] = new StartState_Game(this, storeGameDesignPresenter, storeCoverCardDesignPresenter, storeFaceCardDesignPresenter, storeGameTypePresenter, storeCardPresenter, gameDesignPresenter, cardColumnPresenter, timerPresenter);
-        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, cardColumnPresenter, storeCardPresenter, scorePresenter, motionCounterPresenter, cardMotionHistoryPresenter, timerPresenter);
+        states[typeof(MainState_Game)] = new MainState_Game(this, sceneRoot, cardColumnPresenter, storeCardPresenter, scorePresenter, motionCounterPresenter, cardMotionHistoryPresenter, timerPresenter, motionHintPresenter);
         states[typeof(ExitState_Game)] = new ExitState_Game(this, sceneRoot, timerPresenter);
         states[typeof(RestartState_Game)] = new RestartState_Game(this, sceneRoot, timerPresenter);
         states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot, timerPresenter);

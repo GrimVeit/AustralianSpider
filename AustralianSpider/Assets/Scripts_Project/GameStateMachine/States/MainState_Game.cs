@@ -12,10 +12,20 @@ public class MainState_Game : IState
     private MotionCounterPresenter motionCounterPresenter;
     private CardMotionHistoryPresenter cardMotionHistoryPresenter;
     private TimerPresenter timerPresenter;
+    private MotionHintPresenter motionHintPresenter;
 
     private IGlobalStateMachine stateMachine;
 
-    public MainState_Game(IGlobalStateMachine stateMachine, UIMiniGameSceneRoot sceneRoot, CardColumnPresenter cardColumnPresenter, StoreCardPresenter storeCardPresenter, ScorePresenter scorePresenter, MotionCounterPresenter motionCounterPresenter, CardMotionHistoryPresenter cardMotionHistoryPresenter, TimerPresenter timerPresenter)
+    public MainState_Game(
+        IGlobalStateMachine stateMachine, 
+        UIMiniGameSceneRoot sceneRoot, 
+        CardColumnPresenter cardColumnPresenter, 
+        StoreCardPresenter storeCardPresenter, 
+        ScorePresenter scorePresenter, 
+        MotionCounterPresenter motionCounterPresenter, 
+        CardMotionHistoryPresenter cardMotionHistoryPresenter, 
+        TimerPresenter timerPresenter, 
+        MotionHintPresenter motionHintPresenter)
     {
         this.stateMachine = stateMachine;
         this.sceneRoot = sceneRoot;
@@ -25,6 +35,7 @@ public class MainState_Game : IState
         this.motionCounterPresenter = motionCounterPresenter;
         this.cardMotionHistoryPresenter = cardMotionHistoryPresenter;
         this.timerPresenter = timerPresenter;
+        this.motionHintPresenter = motionHintPresenter;
     }
 
     public void EnterState()
@@ -40,6 +51,7 @@ public class MainState_Game : IState
         cardColumnPresenter.OnFullCompleteCardGroup += cardMotionHistoryPresenter.CleanHistory;
         storeCardPresenter.OnDealCardsFromStock += cardMotionHistoryPresenter.CleanHistory;
         cardColumnPresenter.OnFullCompleteCardGroup_Value += storeCardPresenter.DestroyCards;
+        motionHintPresenter.OnMotionHint += cardColumnPresenter.MotionHint;
 
         sceneRoot.OnClickToRestart_Header += ChangeStateToRestart;
         sceneRoot.OnClickToExit_Header += ChangeStateToExit;
@@ -64,6 +76,7 @@ public class MainState_Game : IState
         cardColumnPresenter.OnFullCompleteCardGroup -= cardMotionHistoryPresenter.CleanHistory;
         storeCardPresenter.OnDealCardsFromStock -= cardMotionHistoryPresenter.CleanHistory;
         cardColumnPresenter.OnFullCompleteCardGroup_Value -= storeCardPresenter.DestroyCards;
+        motionHintPresenter.OnMotionHint -= cardColumnPresenter.MotionHint;
 
         sceneRoot.OnClickToRestart_Header -= ChangeStateToRestart;
         sceneRoot.OnClickToExit_Header -= ChangeStateToExit;

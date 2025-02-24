@@ -14,6 +14,7 @@ public class CardColumnModel
     public event Action<List<CardInteractive>> OnDealCards;
     public event Action<List<CardInteractive>> OnDealCardsFromStock;
     public event Action<CardInteractive, List<CardInteractive>, Column, bool> OnReturnLastMotion;
+    public event Action OnMotionHint;
 
     private int countFullCompleteGroup = 8;
 
@@ -59,5 +60,10 @@ public class CardColumnModel
     public void ReturnLastMotion(CardInteractive cardInteractive, List<CardInteractive> childrens, Column column, bool isActiveHigherCard)
     {
         OnReturnLastMotion?.Invoke(cardInteractive, childrens, column, isActiveHigherCard);
+    }
+
+    internal void MotionHint()
+    {
+        OnMotionHint?.Invoke();
     }
 }
