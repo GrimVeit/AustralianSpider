@@ -158,10 +158,19 @@ public class CardColumnView : View
             {
                 if (cardColumn.CanBeDroped(cardInteractive))
                 {
-                    var element = cardInteractive.ParentColumn.Cards.IndexOf(cardInteractive) - 1;
-                    if(element != -1)
+                    Debug.Log(pointerEventData.pointerEnter.gameObject.name);
+
+                    if (cardInteractive.ParentColumn.Cards.Count > 1)
                     {
-                        OnCardDrop_Value?.Invoke(cardInteractive, cardInteractive.ParentColumn, cardInteractive.ParentColumn.Cards[element].Fliped);
+                        var element = cardInteractive.ParentColumn.Cards.IndexOf(cardInteractive) - 1;
+                        if (element != -1)
+                        {
+                            OnCardDrop_Value?.Invoke(cardInteractive, cardInteractive.ParentColumn, cardInteractive.ParentColumn.Cards[element].Fliped);
+                        }
+                        else
+                        {
+                            OnCardDrop_Value?.Invoke(cardInteractive, cardInteractive.ParentColumn, false);
+                        }
                     }
                     else
                     {
@@ -180,6 +189,8 @@ public class CardColumnView : View
                 }
                 else
                 {
+                    Debug.Log(pointerEventData.pointerEnter.gameObject.name);
+
                     cardInteractive.ReturnToOriginalPosition();
                 }
             }

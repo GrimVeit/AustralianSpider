@@ -4,6 +4,7 @@ using UnityEngine;
 public class MainMenuEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private DailyTaskDescriptionComments descriptionComments;
     [SerializeField] private BuyDesignPrices buyDesignPrices;
     [SerializeField] private FaceCardDesignGroup faceCardDesignGroup;
     [SerializeField] private CoverCardDesignGroup coverCardDesignGroup;
@@ -38,6 +39,8 @@ public class MainMenuEntryPoint : MonoBehaviour
 
     private StoreDailyTaskPresenter storeDailyTaskPresenter;
     private SelectDailyTaskPresenter selectDailyTaskPresenter;
+
+    private DailyTaskDescriptionPresenter dailyTaskDescriptionPresenter;
 
     public void Run(UIRootView uIRootView)
     {
@@ -79,6 +82,8 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeDailyTaskPresenter = new StoreDailyTaskPresenter(new StoreDailyTaskModel());
         selectDailyTaskPresenter = new SelectDailyTaskPresenter(new SelectDailyTaskModel(), viewContainer.GetView<SelectDailyTaskView>());
 
+        dailyTaskDescriptionPresenter = new DailyTaskDescriptionPresenter(new DailyTaskDescriptionModel(descriptionComments), viewContainer.GetView<DailyTaskDescriptionView>());
+
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
 
@@ -88,6 +93,8 @@ public class MainMenuEntryPoint : MonoBehaviour
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
+
+        dailyTaskDescriptionPresenter.Initialize();
 
         selectDailyTaskPresenter.Initialize();
 
@@ -175,6 +182,8 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeDailyTaskPresenter.OnChangeStatusDailyTask += selectDailyTaskPresenter.SetDailyTaskData;
         storeDailyTaskPresenter.OnSelectDailyTask += selectDailyTaskPresenter.SelectDailyTask;
         storeDailyTaskPresenter.OnDeselectDailyTask += selectDailyTaskPresenter.DeselectDailyTask;
+
+        storeDailyTaskPresenter.OnSelectDailyTask += dailyTaskDescriptionPresenter.SetDailyTaskData;
     }
 
     private void DeactivateEvents()
@@ -230,6 +239,8 @@ public class MainMenuEntryPoint : MonoBehaviour
         storeDailyTaskPresenter.OnChangeStatusDailyTask -= selectDailyTaskPresenter.SetDailyTaskData;
         storeDailyTaskPresenter.OnSelectDailyTask -= selectDailyTaskPresenter.SelectDailyTask;
         storeDailyTaskPresenter.OnDeselectDailyTask -= selectDailyTaskPresenter.DeselectDailyTask;
+
+        storeDailyTaskPresenter.OnSelectDailyTask -= dailyTaskDescriptionPresenter.SetDailyTaskData;
     }
 
     private void ActivateTransitionsSceneEvents()
@@ -257,6 +268,7 @@ public class MainMenuEntryPoint : MonoBehaviour
         particleEffectPresenter?.Dispose();
         bankPresenter?.Dispose();
 
+        dailyTaskDescriptionPresenter?.Dispose();
 
         selectDailyTaskPresenter?.Dispose();
 

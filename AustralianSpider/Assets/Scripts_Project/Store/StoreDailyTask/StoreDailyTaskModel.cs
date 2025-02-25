@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class StoreDailyTaskModel
 {
@@ -54,7 +55,23 @@ public class StoreDailyTaskModel
             ResetCalendar();
         }
 
-        dailyTaskDatas.ForEach(task => OnChangeStatusDailyTask(task));
+        for (int i = 0; i < dailyTaskDatas.Count; i++)
+        {
+            if (i < currentDay - 1)
+            {
+                dailyTaskDatas[i].SetTimePeriod(TimePeriod.Past);
+            }
+            else if (i == currentDay - 1)
+            {
+                dailyTaskDatas[i].SetTimePeriod(TimePeriod.Present);
+            }
+            else
+            {
+                dailyTaskDatas[i].SetTimePeriod(TimePeriod.Future);
+            }
+
+            OnChangeStatusDailyTask?.Invoke(dailyTaskDatas[i]);
+        }
 
         SelectDailyTaskData(currentDay-1);
     }
@@ -69,15 +86,15 @@ public class StoreDailyTaskModel
         {
             if (i < currentDay - 1)
             {
-                dailyTaskDatas.Add(new DailyTaskData(DailyTaskStatus.SkippedPlayed, false, i));
+                dailyTaskDatas.Add(new DailyTaskData(DailyTaskStatus.SkippedPlayed, TimePeriod.Past, false, i));
             }
             else if (i == currentDay - 1)
             {
-                dailyTaskDatas.Add(new DailyTaskData(DailyTaskStatus.NonePlayed, true, i));
+                dailyTaskDatas.Add(new DailyTaskData(DailyTaskStatus.NonePlayed, TimePeriod.Present, true, i));
             }
             else
             {
-                dailyTaskDatas.Add(new DailyTaskData(DailyTaskStatus.NonePlayed, false, i));
+                dailyTaskDatas.Add(new DailyTaskData(DailyTaskStatus.NonePlayed, TimePeriod.Future, false, i));
             }
         }
     }
@@ -90,6 +107,9 @@ public class StoreDailyTaskModel
 
     public void SelectDailyTaskData(int number)
     {
+        if(currentDailyTaskData != null)
+            if(currentDailyTaskData.Id == number) return;
+
         if (currentDailyTaskData != null)
         {
             currentDailyTaskData.IsSelect = false;
@@ -143,11 +163,13 @@ public class DailyTaskData
 {
     public int Id;
     public DailyTaskStatus Status;
+    public TimePeriod TimePeriod;
     public bool IsSelect;
 
-    public DailyTaskData(DailyTaskStatus status, bool isSelect, int id)
+    public DailyTaskData(DailyTaskStatus status, TimePeriod time, bool isSelect, int id)
     {
         Status = status;
+        TimePeriod = time;
         IsSelect = isSelect;
         Id = id;
     }
@@ -155,6 +177,11 @@ public class DailyTaskData
     public void SetStatus(DailyTaskStatus status)
     {
         Status = status;
+    }
+    
+    public void SetTimePeriod(TimePeriod time)
+    {
+        TimePeriod = time;
     }
 }
 
@@ -164,4 +191,11 @@ public enum DailyTaskStatus
     WinPlayed,
     LosePlayed,
     SkippedPlayed
+}
+
+public enum TimePeriod
+{
+    Past, 
+    Present, 
+    Future
 }
