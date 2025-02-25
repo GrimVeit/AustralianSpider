@@ -54,6 +54,7 @@ public class GameEntryPoint
         sceneEntryPoint.Run(rootView);
 
         sceneEntryPoint.OnGoToGame += () => coroutines.StartCoroutine(LoadAndStartMiniGameScene());
+        sceneEntryPoint.OnGoToDailyTaskGame += () => coroutines.StartCoroutine(LoadAndStartDailyTaskMiniGameScene());
 
         yield return rootView.HideLoadingScreen();
     }
@@ -78,6 +79,30 @@ public class GameEntryPoint
 
         sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
         sceneEntryPoint.OnGoToGame += () => coroutines.StartCoroutine(LoadAndStartMiniGameScene());
+
+
+        yield return rootView.HideLoadingScreen();
+    }
+
+    private IEnumerator LoadAndStartDailyTaskMiniGameScene()
+    {
+        rootView.SetLoadScreen(1);
+
+        yield return rootView.ShowLoadingScreen();
+
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+
+        yield return new WaitForSeconds(0.3f);
+
+        yield return LoadScene(Scenes.BOOT);
+        yield return LoadScene(Scenes.DAILY_TASK_MINI_GAME);
+
+        yield return new WaitForSeconds(0.1f);
+
+        var sceneEntryPoint = Object.FindObjectOfType<DailyTaskGameSceneEntryPoint>();
+        sceneEntryPoint.Run(rootView);
+
+        sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
 
 
         yield return rootView.HideLoadingScreen();

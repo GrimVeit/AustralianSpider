@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 public class StoreDailyTaskModel
 {
     public event Action<DayOfWeek> OnGetDayOfWeekFirstDayMonth;
+    public event Action<int, int> OnGetYearAndMonth;
 
     public event Action<DailyTaskData> OnDeselectDailyTask;
     public event Action<DailyTaskData> OnSelectDailyTask;
@@ -29,6 +30,8 @@ public class StoreDailyTaskModel
     {
         DayOfWeek dayOfweakFirstDayMonth = new DateTime(currentYear, currentMonth, 1).DayOfWeek;
         OnGetDayOfWeekFirstDayMonth?.Invoke(dayOfweakFirstDayMonth);
+
+        OnGetYearAndMonth?.Invoke(currentYear, currentMonth);
 
         if (File.Exists(FilePath))
         {

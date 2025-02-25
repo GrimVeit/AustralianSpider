@@ -179,6 +179,7 @@ public class MainMenuEntryPoint : MonoBehaviour
 
         selectDailyTaskPresenter.OnChooseDailyTask += storeDailyTaskPresenter.SelectDailyTask;
         storeDailyTaskPresenter.OnGetDayOfWeekFirstDayMonth += selectDailyTaskPresenter.SetDayOfWeakFirstDayMonth;
+        storeDailyTaskPresenter.OnGetYearAndMonth += dailyTaskDescriptionPresenter.SetYearAndMonth;
         storeDailyTaskPresenter.OnChangeStatusDailyTask += selectDailyTaskPresenter.SetDailyTaskData;
         storeDailyTaskPresenter.OnSelectDailyTask += selectDailyTaskPresenter.SelectDailyTask;
         storeDailyTaskPresenter.OnDeselectDailyTask += selectDailyTaskPresenter.DeselectDailyTask;
@@ -236,6 +237,7 @@ public class MainMenuEntryPoint : MonoBehaviour
 
         selectDailyTaskPresenter.OnChooseDailyTask -= storeDailyTaskPresenter.SelectDailyTask;
         storeDailyTaskPresenter.OnGetDayOfWeekFirstDayMonth -= selectDailyTaskPresenter.SetDayOfWeakFirstDayMonth;
+        storeDailyTaskPresenter.OnGetYearAndMonth -= dailyTaskDescriptionPresenter.SetYearAndMonth;
         storeDailyTaskPresenter.OnChangeStatusDailyTask -= selectDailyTaskPresenter.SetDailyTaskData;
         storeDailyTaskPresenter.OnSelectDailyTask -= selectDailyTaskPresenter.SelectDailyTask;
         storeDailyTaskPresenter.OnDeselectDailyTask -= selectDailyTaskPresenter.DeselectDailyTask;
@@ -246,11 +248,13 @@ public class MainMenuEntryPoint : MonoBehaviour
     private void ActivateTransitionsSceneEvents()
     {
         sceneRoot.OnPlay += HandleGoToGame;
+        dailyTaskDescriptionPresenter.OnPlayDailyTask += HandleGoToDailyTaskGame;
     }
 
     private void DeactivateTransitionsSceneEvents()
     {
         sceneRoot.OnPlay -= HandleGoToGame;
+        dailyTaskDescriptionPresenter.OnPlayDailyTask -= HandleGoToDailyTaskGame;
     }
 
     private void Deactivate()
@@ -302,11 +306,18 @@ public class MainMenuEntryPoint : MonoBehaviour
     #region Input actions
 
     public event Action OnGoToGame;
+    public event Action OnGoToDailyTaskGame;
 
     private void HandleGoToGame()
     {
         Deactivate();
         OnGoToGame?.Invoke();
+    }
+
+    private void HandleGoToDailyTaskGame()
+    {
+        Deactivate();
+        OnGoToDailyTaskGame?.Invoke();
     }
 
     #endregion

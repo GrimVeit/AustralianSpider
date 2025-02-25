@@ -11,5 +11,6 @@ public static class Scenes
 
     public const string MAIN_MENU = "MainMenuScene";
     public const string MINI_GAME = "MiniGameScene";
+    public const string DAILY_TASK_MINI_GAME = "DailyTaskGameScene";
     public const string START = "StartScene";
 }

@@ -24,6 +24,12 @@ public class StoreDailyTaskPresenter
 
     #region Input
 
+    public event Action<int, int> OnGetYearAndMonth
+    {
+        add => model.OnGetYearAndMonth += value;
+        remove => model.OnGetYearAndMonth -= value;
+    }
+
     public event Action<DayOfWeek> OnGetDayOfWeekFirstDayMonth
     {
         add { model.OnGetDayOfWeekFirstDayMonth += value; }
