@@ -247,8 +247,6 @@ public class CardColumnView : View
         cardInteractive.SetParentColumn(column);
 
         cardInteractive.MoveTo(column.NewCardPosition, 0.1f, () => ReturnEndMove(cardInteractive, column, isActiveHigherCard));
-
-        OnCardDrop?.Invoke();
     }
 
     private void ReturnEndMove(CardInteractive card, Column cardColumn, bool isActiveHigherCard)

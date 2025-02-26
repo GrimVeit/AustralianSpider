@@ -10,6 +10,8 @@ public class DailyTaskDescriptionComments : ScriptableObject
 
     public string GetRandomCommentByStatusAndTime(DailyTaskStatus status, TimePeriod timePeriod)
     {
+        Debug.Log(status + "//" + timePeriod);
+
         return comments.FirstOrDefault(data => data.Status == status && data.TimePeriod == timePeriod).GetRandomComment();
     }
 }

@@ -22,12 +22,16 @@ public class StoreDailyTaskModel
 
     public readonly string FilePath = Path.Combine(Application.persistentDataPath, "DailyTask.json");
 
-    private int currentYear => DateTime.UtcNow.Year;
-    private int currentMonth => DateTime.UtcNow.Month;
-    private int currentDay => DateTime.UtcNow.Day;
+    private int currentYear;
+    private int currentMonth;
+    private int currentDay;
 
     public void Initialize()
     {
+        currentYear = DateTime.UtcNow.Year;
+        currentMonth = DateTime.UtcNow.Month;
+        currentDay = DateTime.UtcNow.Day;
+
         DayOfWeek dayOfweakFirstDayMonth = new DateTime(currentYear, currentMonth, 1).DayOfWeek;
         OnGetDayOfWeekFirstDayMonth?.Invoke(dayOfweakFirstDayMonth);
 
@@ -71,6 +75,11 @@ public class StoreDailyTaskModel
             else
             {
                 dailyTaskDatas[i].SetTimePeriod(TimePeriod.Future);
+            }
+
+            if (dailyTaskDatas[i].TimePeriod == TimePeriod.Past && dailyTaskDatas[i].Status == DailyTaskStatus.NonePlayed)
+            {
+                dailyTaskDatas[i].SetStatus(DailyTaskStatus.SkippedPlayed);
             }
 
             OnChangeStatusDailyTask?.Invoke(dailyTaskDatas[i]);
