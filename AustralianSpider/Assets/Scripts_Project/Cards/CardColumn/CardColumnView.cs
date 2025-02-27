@@ -84,7 +84,7 @@ public class CardColumnView : View
                 card.OnDroppedCard += SortDropedCard;
 
                 card.SetParentColumn(columns[i]);
-                card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn));
+                card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn, false));
 
                 indexCard += 1;
 
@@ -101,7 +101,7 @@ public class CardColumnView : View
             card.Pickable = true;
 
             card.SetParentColumn(columns[i]);
-            card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn));
+            card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn, true));
 
             indexCard += 1;
 
@@ -125,17 +125,21 @@ public class CardColumnView : View
             card.Pickable = true;
 
             card.SetParentColumn(columns[i]);
-            card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn));
+            card.MoveTo(card.ParentColumn.NewCardPosition, 0.08f, () => EndDealCardsFromStock(card, card.ParentColumn, true));
 
             yield return new WaitForSeconds(0.02f);
         }
     }
 
-    private void EndDealCardsFromStock(CardInteractive card, Column cardColumn)
+    private void EndDealCardsFromStock(CardInteractive card, Column cardColumn, bool refresh)
     {
         cardColumn.AddCard(card);
-        cardColumn.RefreshPickable();
-        cardColumn.CheckFinishedSequence();
+
+        if (refresh)
+        {
+            cardColumn.RefreshPickable();
+            cardColumn.CheckFinishedSequence();
+        }
     }
 
     public void PickedCard(CardInteractive cardInteractive)
@@ -144,8 +148,21 @@ public class CardColumnView : View
         {
             //currentCardInteractive.ReturnToOriginalPosition();
         }
+
+
         currentCardInteractive = cardInteractive;
         currentCardInteractive.transform.SetParent(transformParent);
+
+        for (int i = 0; columns.Count > i; i++)
+        {
+            for (int j = 0; j < columns[i].Cards.Count; j++)
+            {
+                if (columns[i].Cards[j].Pickable && columns[i].Cards[j] != currentCardInteractive)
+                {
+                    columns[i].Cards[j].CanvasGroup.blocksRaycasts = false;
+                }
+            }
+        }
     }
 
     public void SortDropedCard(PointerEventData pointerEventData, CardInteractive cardInteractive)
@@ -197,6 +214,17 @@ public class CardColumnView : View
             else
             {
                 cardInteractive.ReturnToOriginalPosition();
+            }
+
+            for (int i = 0; columns.Count > i; i++)
+            {
+                for (int j = 0; j < columns[i].Cards.Count; j++)
+                {
+                    if (columns[i].Cards[j].Pickable && columns[i].Cards[j] != cardInteractive)
+                    {
+                        columns[i].Cards[j].CanvasGroup.blocksRaycasts = true;
+                    }
+                }
             }
         }
         else

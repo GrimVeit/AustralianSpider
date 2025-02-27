@@ -8,6 +8,7 @@ public class Column : MonoBehaviour
 {
     public List<CardInteractive> Cards = new List<CardInteractive>();
     public VerticalLayoutGroup VerticalLayoutGroup;
+    public CanvasScaler CanvasScaler;
 
     [SerializeField] public Transform ContentScrollView;
     [SerializeField] private Transform transformFirstPosition;

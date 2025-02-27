@@ -474,6 +474,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 0}
+  CanvasGroup: {fileID: 0}
 --- !u!225 &19964112
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -671,7 +672,7 @@ RectTransform:
   m_Father: {fileID: 2070952350}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1376,7 +1377,7 @@ RectTransform:
   m_Father: {fileID: 1890201006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1618,7 +1619,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &122836898
 MonoBehaviour:
@@ -3447,7 +3448,7 @@ RectTransform:
   m_Father: {fileID: 1437772381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4300,7 +4301,7 @@ RectTransform:
   m_Father: {fileID: 1707080950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5198,7 +5199,7 @@ RectTransform:
   m_Father: {fileID: 1211452096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7072,7 +7073,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &535513737
 MonoBehaviour:
@@ -7224,7 +7225,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &552998026
 MonoBehaviour:
@@ -7419,7 +7420,7 @@ RectTransform:
   m_Father: {fileID: 49604692}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7604,7 +7605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: -124}
+  m_AnchoredPosition: {x: -30, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &622765472
@@ -7659,6 +7660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 535513737}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 535513736}
   transformFirstPosition: {fileID: 2111599092}
   YCardOffset: -30
@@ -7836,7 +7838,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &672293414
 MonoBehaviour:
@@ -7914,7 +7916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -182, y: -124}
+  m_AnchoredPosition: {x: -182, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &679988291
@@ -7969,6 +7971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 2028242944}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 2028242943}
   transformFirstPosition: {fileID: 739176025}
   YCardOffset: -30
@@ -8322,7 +8325,7 @@ RectTransform:
   m_Father: {fileID: 1845792311}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8685,7 +8688,7 @@ RectTransform:
   m_Father: {fileID: 322084593}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9051,7 +9054,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -649, y: -124}
+  m_AnchoredPosition: {x: -649, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795837163
@@ -9106,6 +9109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 552998026}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 552998025}
   transformFirstPosition: {fileID: 720986989}
   YCardOffset: -30
@@ -11141,7 +11145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 433, y: -124}
+  m_AnchoredPosition: {x: 433, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &961645577
@@ -11196,6 +11200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 1444121385}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 1444121384}
   transformFirstPosition: {fileID: 224107284}
   YCardOffset: -30
@@ -11897,7 +11902,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1007008226
 MonoBehaviour:
@@ -11995,6 +12000,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 0}
+  CanvasGroup: {fileID: 0}
 --- !u!225 &1011031987
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -12360,7 +12366,7 @@ RectTransform:
   m_Father: {fileID: 850741992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12531,7 +12537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 277, y: -124}
+  m_AnchoredPosition: {x: 277, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067476457
@@ -12586,6 +12592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 122836898}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 122836897}
   transformFirstPosition: {fileID: 1818082867}
   YCardOffset: -30
@@ -12898,7 +12905,7 @@ RectTransform:
   m_Father: {fileID: 1041733673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13576,7 +13583,7 @@ RectTransform:
   m_Father: {fileID: 128695957}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13651,7 +13658,7 @@ RectTransform:
   m_Father: {fileID: 1303155460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15224,7 +15231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1319376963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15284,7 +15291,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319376962}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -15757,7 +15764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -801.7, y: -124}
+  m_AnchoredPosition: {x: -801.7, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1380711668
@@ -15780,7 +15787,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 98a99e7ac51fc8f4a905c45522c838cb, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15812,6 +15819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 2111579625}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 2111579624}
   transformFirstPosition: {fileID: 1618385010}
   YCardOffset: -30
@@ -15928,7 +15936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -338, y: -124}
+  m_AnchoredPosition: {x: -338, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1397175554
@@ -15983,6 +15991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 1007008226}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 1007008225}
   transformFirstPosition: {fileID: 757299654}
   YCardOffset: -30
@@ -16383,7 +16392,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1444121385
 MonoBehaviour:
@@ -16523,7 +16532,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 586, y: -124}
+  m_AnchoredPosition: {x: 586, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1457143009
@@ -16578,6 +16587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 1788298935}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 1788298934}
   transformFirstPosition: {fileID: 252325359}
   YCardOffset: -30
@@ -16707,7 +16717,7 @@ RectTransform:
   m_Father: {fileID: 620904120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17641,7 +17651,7 @@ RectTransform:
   m_Father: {fileID: 137885920}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17803,7 +17813,7 @@ RectTransform:
   m_Father: {fileID: 531805666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18415,7 +18425,7 @@ RectTransform:
   m_Father: {fileID: 1482605984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -18959,7 +18969,7 @@ RectTransform:
   m_Father: {fileID: 597651225}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19326,7 +19336,7 @@ RectTransform:
   m_Father: {fileID: 1964751327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19942,7 +19952,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1679365362
 MonoBehaviour:
@@ -20131,7 +20141,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -493, y: -124}
+  m_AnchoredPosition: {x: -493, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1719367532
@@ -20186,6 +20196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 672293414}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 672293413}
   transformFirstPosition: {fileID: 884264929}
   YCardOffset: -30
@@ -20371,6 +20382,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 0}
+  CanvasGroup: {fileID: 0}
 --- !u!225 &1737854458
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -20552,6 +20564,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 0}
+  CanvasGroup: {fileID: 0}
 --- !u!225 &1742952017
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -21138,7 +21151,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1788298935
 MonoBehaviour:
@@ -22351,6 +22364,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 1090437785}
+  CanvasGroup: {fileID: 0}
 --- !u!1 &1934264808
 GameObject:
   m_ObjectHideFlags: 0
@@ -22585,7 +22599,7 @@ RectTransform:
   m_Father: {fileID: 1507470599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -22660,7 +22674,7 @@ RectTransform:
   m_Father: {fileID: 1987064859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -23046,6 +23060,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 0}
+  CanvasGroup: {fileID: 0}
 --- !u!225 &1967752632
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -23552,7 +23567,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2028242944
 MonoBehaviour:
@@ -23854,7 +23869,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 122, y: -124}
+  m_AnchoredPosition: {x: 122, y: -160}
   m_SizeDelta: {x: 140.4, y: 852.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2066967098
@@ -23909,6 +23924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   VerticalLayoutGroup: {fileID: 1679365362}
+  CanvasScaler: {fileID: 5759112182369476049}
   ContentScrollView: {fileID: 1679365361}
   transformFirstPosition: {fileID: 602365245}
   YCardOffset: -30
@@ -24310,7 +24326,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00004760399, y: -0.00007785925}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -140.4, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2111579625
 MonoBehaviour:
@@ -24443,6 +24459,7 @@ MonoBehaviour:
   currentCardData: {fileID: 0}
   ParentColumn: {fileID: 0}
   imageBorder: {fileID: 0}
+  CanvasGroup: {fileID: 0}
 --- !u!225 &2115281705
 CanvasGroup:
   m_ObjectHideFlags: 0

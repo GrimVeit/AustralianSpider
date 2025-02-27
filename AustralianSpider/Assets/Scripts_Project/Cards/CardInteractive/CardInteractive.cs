@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
@@ -22,12 +23,12 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
             if (!pickable)
             {
-                canvasGroup.blocksRaycasts = false;
+                CanvasGroup.blocksRaycasts = false;
                 image.color = Color.gray;
             }
             else
             {
-                canvasGroup.blocksRaycasts = true;
+                CanvasGroup.blocksRaycasts = true;
                 image.color = Color.white;
             }
         }
@@ -72,7 +73,12 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     private Image spriteRenderer;
     private RectTransform rectTransform => transform.GetComponent<RectTransform>();
-    private CanvasGroup canvasGroup => GetComponent<CanvasGroup>();
+    public CanvasGroup CanvasGroup;
+
+    private void Awake()
+    {
+        CanvasGroup = GetComponent<CanvasGroup>();
+    }
 
     private Image image
     {
@@ -122,12 +128,12 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         ParentColumn.VerticalLayoutGroup.enabled = true;
         transform.SetParent(ParentColumn.ContentScrollView);
 
-        canvasGroup.blocksRaycasts = true;
+        CanvasGroup.blocksRaycasts = true;
 
         if (Children != null)
             for (int i = 0; i < Children.Count; i++)
             {
-                Children[i].canvasGroup.blocksRaycasts = true;
+                Children[i].CanvasGroup.blocksRaycasts = true;
                 Children[i].transform.SetParent(ParentColumn.ContentScrollView);
             }
 
@@ -139,7 +145,7 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if(!Pickable)
             return;
 
-        canvasGroup.blocksRaycasts = false;
+        CanvasGroup.blocksRaycasts = false;
 
         picked = true;
 
@@ -147,7 +153,7 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (Children != null)
             for (int i = 0; i < Children.Count; i++)
             {
-                Children[i].canvasGroup.blocksRaycasts = false;
+                Children[i].CanvasGroup.blocksRaycasts = false;
                 Children[i].transform.SetParent(transform);
             }
 
@@ -159,7 +165,7 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (children != null)
         for (int i = 0; i < children.Count; i++)
         {
-            children[i].canvasGroup.blocksRaycasts = false;
+            children[i].CanvasGroup.blocksRaycasts = false;
             children[i].transform.SetParent(transform);
         }
     }
@@ -169,7 +175,7 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if(Children != null)
         for (int i = 0; i < Children.Count; i++)
         {
-            Children[i].canvasGroup.blocksRaycasts = true;
+            Children[i].CanvasGroup.blocksRaycasts = true;
             Children[i].transform.SetParent(Children[i].ParentColumn.ContentScrollView);
         }
     }
@@ -182,12 +188,12 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         if (!picked)
             return;
 
-        canvasGroup.blocksRaycasts = true;
+        CanvasGroup.blocksRaycasts = true;
 
         if (Children != null)
             for (int i = 0; i < Children.Count; i++)
             {
-                Children[i].canvasGroup.blocksRaycasts = true;
+                Children[i].CanvasGroup.blocksRaycasts = true;
             }
 
         OnDroppedCard?.Invoke(eventData, this);
@@ -200,7 +206,13 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
         picked = true;
 
-        rectTransform.anchoredPosition += eventData.delta;
+        Debug.Log(ParentColumn.CanvasScaler.referenceResolution);
+
+        float x = Screen.width / ParentColumn.CanvasScaler.referenceResolution.x;
+        float y = Screen.height / ParentColumn.CanvasScaler.referenceResolution.y;
+
+        Debug.Log(x + "//" + y);
+        rectTransform.anchoredPosition += eventData.delta / (((Screen.width / ParentColumn.CanvasScaler.referenceResolution.x) + (Screen.height / ParentColumn.CanvasScaler.referenceResolution.y))/2);
     }
 
 

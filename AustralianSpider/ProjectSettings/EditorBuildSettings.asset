@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DailyTaskGameScene.unity
     guid: ab6fa445e18449347be94b52de5c4993
+  - enabled: 1
+    path: Assets/Scenes/PortraitToLandscape.unity
+    guid: 3997c121b87e5654892411b666bce470
+  - enabled: 1
+    path: Assets/Scenes/LandscapeToPortrait.unity
+    guid: c1c5385ad854a6845b8618f302a41eb9
   m_configObjects: {}

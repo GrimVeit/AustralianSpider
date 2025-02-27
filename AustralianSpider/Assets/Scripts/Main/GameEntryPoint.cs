@@ -45,16 +45,48 @@ public class GameEntryPoint
 
         yield return rootView.ShowLoadingScreen();
 
-        Screen.orientation = ScreenOrientation.Portrait;
-
         yield return LoadScene(Scenes.BOOT);
         yield return LoadScene(Scenes.MAIN_MENU);
 
         var sceneEntryPoint = Object.FindObjectOfType<MainMenuEntryPoint>();
         sceneEntryPoint.Run(rootView);
 
-        sceneEntryPoint.OnGoToGame += () => coroutines.StartCoroutine(LoadAndStartMiniGameScene());
-        sceneEntryPoint.OnGoToDailyTaskGame += () => coroutines.StartCoroutine(LoadAndStartDailyTaskMiniGameScene());
+        sceneEntryPoint.OnGoToGame += () => coroutines.StartCoroutine(LoadAndStartFromMenuToGame());
+        sceneEntryPoint.OnGoToDailyTaskGame += () => coroutines.StartCoroutine(LoadAndStartFromMenuToDailyTaskGame());
+
+        yield return rootView.HideLoadingScreen();
+    }
+
+    private IEnumerator LoadAndStartFromMenuToGame()
+    {
+        rootView.SetLoadScreen(2);
+
+        yield return rootView.ShowLoadingScreen();
+
+        yield return LoadScene(Scenes.BOOT);
+        yield return LoadScene(Scenes.PORTRAIT_TO_LANDSCAPE);
+
+        var sceneEntryPoint = Object.FindObjectOfType<PortraitToLandscapeSceneEntryPoint>();
+        sceneEntryPoint.Run(rootView);
+
+        sceneEntryPoint.OnGoToLandscapeScene += () => coroutines.StartCoroutine(LoadAndStartMiniGameScene());
+
+        yield return rootView.HideLoadingScreen();
+    }
+
+    private IEnumerator LoadAndStartFromMenuToDailyTaskGame()
+    {
+        rootView.SetLoadScreen(2);
+
+        yield return rootView.ShowLoadingScreen();
+
+        yield return LoadScene(Scenes.BOOT);
+        yield return LoadScene(Scenes.PORTRAIT_TO_LANDSCAPE);
+
+        var sceneEntryPoint = Object.FindObjectOfType<PortraitToLandscapeSceneEntryPoint>();
+        sceneEntryPoint.Run(rootView);
+
+        sceneEntryPoint.OnGoToLandscapeScene += () => coroutines.StartCoroutine(LoadAndStartDailyTaskMiniGameScene());
 
         yield return rootView.HideLoadingScreen();
     }
@@ -64,8 +96,6 @@ public class GameEntryPoint
         rootView.SetLoadScreen(1);
 
         yield return rootView.ShowLoadingScreen();
-
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
 
         yield return new WaitForSeconds(0.3f);
 
@@ -77,7 +107,7 @@ public class GameEntryPoint
         var sceneEntryPoint = Object.FindObjectOfType<MiniGameSceneEntryPoint>();
         sceneEntryPoint.Run(rootView);
 
-        sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
+        sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartFromGameToMenu());
         sceneEntryPoint.OnGoToGame += () => coroutines.StartCoroutine(LoadAndStartMiniGameScene());
 
 
@@ -90,8 +120,6 @@ public class GameEntryPoint
 
         yield return rootView.ShowLoadingScreen();
 
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-
         yield return new WaitForSeconds(0.3f);
 
         yield return LoadScene(Scenes.BOOT);
@@ -102,8 +130,25 @@ public class GameEntryPoint
         var sceneEntryPoint = Object.FindObjectOfType<DailyTaskGameSceneEntryPoint>();
         sceneEntryPoint.Run(rootView);
 
-        sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
+        sceneEntryPoint.OnGoToMainMenu += () => coroutines.StartCoroutine(LoadAndStartFromGameToMenu());
 
+
+        yield return rootView.HideLoadingScreen();
+    }
+
+    private IEnumerator LoadAndStartFromGameToMenu()
+    {
+        rootView.SetLoadScreen(2);
+
+        yield return rootView.ShowLoadingScreen();
+
+        yield return LoadScene(Scenes.BOOT);
+        yield return LoadScene(Scenes.LANDSCAPE_TO_PORTRAIT);
+
+        var sceneEntryPoint = Object.FindObjectOfType<LandscapeToPortraitSceneEntryPoint>();
+        sceneEntryPoint.Run(rootView);
+
+        sceneEntryPoint.OnGoToPortraitSceneScene += () => coroutines.StartCoroutine(LoadAndStartMainMenu());
 
         yield return rootView.HideLoadingScreen();
     }
