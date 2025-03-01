@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HeaderPanel_Game : MovePanel
 {
     [SerializeField] private Button buttonRestart;
+    [SerializeField] private Button buttonRestart2;
     [SerializeField] private Button buttonExit;
 
     public override void Initialize()
@@ -14,6 +15,7 @@ public class HeaderPanel_Game : MovePanel
         base.Initialize();
 
         buttonRestart.onClick.AddListener(() => OnClickToRestart?.Invoke());
+        buttonRestart2.onClick.AddListener(() => OnClickToRestart?.Invoke());
         buttonExit.onClick.AddListener(()=> OnClickToExit?.Invoke());
     }
 
@@ -22,6 +24,7 @@ public class HeaderPanel_Game : MovePanel
         base.Dispose();
 
         buttonRestart.onClick.RemoveListener(() => OnClickToRestart?.Invoke());
+        buttonRestart2.onClick.RemoveListener(() => OnClickToRestart?.Invoke());
         buttonExit.onClick.RemoveListener(() => OnClickToExit?.Invoke());
     }
 

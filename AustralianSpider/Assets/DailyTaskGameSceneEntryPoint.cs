@@ -158,10 +158,10 @@ public class DailyTaskGameSceneEntryPoint : MonoBehaviour
 
         sceneRoot?.Dispose();
         soundPresenter?.Dispose();
+        scorePresenter?.Dispose();
         bankPresenter?.Dispose();
 
         timerPresenter?.Dispose();
-        scorePresenter?.Dispose();
         motionCounterPresenter?.Dispose();
         cardMotionHistoryPresenter?.Dispose();
         motionHintPresenter?.Dispose();

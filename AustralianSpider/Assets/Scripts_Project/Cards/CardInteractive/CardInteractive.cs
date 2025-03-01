@@ -211,7 +211,7 @@ public class CardInteractive : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         float x = Screen.width / ParentColumn.CanvasScaler.referenceResolution.x;
         float y = Screen.height / ParentColumn.CanvasScaler.referenceResolution.y;
 
-        Debug.Log(x + "//" + y);
+        //Debug.Log(x + "//" + y);
         rectTransform.anchoredPosition += eventData.delta / (((Screen.width / ParentColumn.CanvasScaler.referenceResolution.x) + (Screen.height / ParentColumn.CanvasScaler.referenceResolution.y))/2);
     }
 

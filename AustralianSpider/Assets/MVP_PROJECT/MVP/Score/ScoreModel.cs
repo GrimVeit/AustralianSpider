@@ -25,6 +25,8 @@ public class ScoreModel
 
     public void Dispose()
     {
+        Debug.Log(currentScore);
+
         if(currentScore > 0)
         {
             moneyProvider.SendMoney(currentScore);
